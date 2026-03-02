@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClimaPocket — Android Agrometeorological Weather & Soil Telemetry</title>
+  <meta name="description" content="A native Android (Kotlin & Jetpack Compose) agrometeorological weather app designed for Northern Mindanao farming cooperatives.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Ambient background canvas -->
+  <div class="sky-gradient-ambient"></div>
+
+  <!-- Studio Shell -->
+  <div class="studio-shell">
+    
+    <!-- Left: Architecture & Compose Component Inspector -->
+    <section class="docs-column">
+      <div class="docs-header">
+        <span class="platform-badge">ANDROID &bull; JETPACK COMPOSE</span>
+        <h2>ClimaPocket Android</h2>
+        <p class="arch-desc">
+          Clean Architecture &bull; MVI (Model-View-Intent) &bull; Kotlin Coroutines &bull; Room DB &bull; Offline-First Agrometeorology.
+        </p>
+      </div>
+
+      <!-- Station Selector -->
+      <div class="selector-group">
+        <label>COOPERATIVE WEATHER STATION (MINDANAO)</label>
+        <div class="station-list">
+          <button class="station-chip active" onclick="selectStation('claveria', this)">
+            <strong>Claveria Highlands</strong>
+            <span>Misamis Oriental &bull; 850m ASL &bull; Corn & Coffee</span>
+          </button>
+          <button class="station-chip" onclick="selectStation('manolo', this)">
+            <strong>Manolo Fortich</strong>
+            <span>Bukidnon Foothills &bull; 620m ASL &bull; Pineapple & Cacao</span>
+          </button>
+          <button class="station-chip" onclick="selectStation('cdo-carm', this)">
+            <strong>Carmen Valley</strong>
+            <span>Cagayan de Oro &bull; 25m ASL &bull; Urban Agro-Corridor</span>
+          </button>
+          <button class="station-chip" onclick="selectStation('lantapan', this)">
+            <strong>Lantapan Slopes</strong>
+            <span>Mount Kitanglad &bull; 1,120m ASL &bull; High-Altitude Arabica</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Live Kotlin Composable Code Viewer -->
+      <div class="compose-code-box">
+        <div class="code-box-header">
+          <span>ClimaCard.kt (Jetpack Compose)</span>
+          <span class="code-tag">@Composable</span>
+        </div>
+        <pre class="code-display" id="composeCodeView">@Composable
+fun AgroMetricsCard(telemetry: StationTelemetry) {
+    Card(
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
+        shape = RoundedCornerShape(24.dp)
+    ) {
+        Column(modifier = Modifier.padding(20.dp)) {
+            Text(
+                text = "${telemetry.soilMoisture}% SOIL SATURATION",
+                style = MaterialTheme.typography.labelSmall
+            )
+            LinearProgressIndicator(
+                progress = { telemetry.soilMoisture / 100f },
+                modifier = Modifier.fillMaxWidth().height(8.dp),
+                color = MaterialTheme.colorScheme.primary
+            )
+        }
+    }
+}</pre>
+      </div>
+
+      <!-- Android Stack Tags -->
+      <div class="stack-footer">
+        <span class="tag">Kotlin 2.0</span>
+        <span class="tag">Jetpack Compose</span>
+        <span class="tag">Coroutines Flow</span>
+        <span class="tag">Koin DI</span>
+        <span class="tag">Material 3</span>
+      </div>
+    </section>
+
+    <!-- Right: Realistic Android Phone Emulator Device -->
+    <section class="device-column">
+      
+      <div class="phone-frame">
+        <!-- Speaker / Camera Notch -->
+        <div class="device-island">
+          <div class="camera-lens"></div>
+        </div>
+
+        <!-- Android Status Bar -->
+        <div class="device-status-bar">
+          <span class="status-time">09:41</span>
+          <div class="status-icons">
+            <span class="icon-wifi">LTE</span>
+            <span class="icon-battery">98%</span>
+          </div>
+        </div>
+
+        <!-- App Screen Content (Material You Theme) -->
+        <div class="app-screen" id="appScreen">
+          
+          <!-- Station Location Banner -->
+          <div class="app-top-nav">
+            <div class="location-group">
+              <span class="loc-pin">📍</span>
+              <div>
+                <h3 id="devLocationTitle">Claveria Highlands</h3>
+                <span class="loc-prov" id="devLocationProv">Misamis Oriental &bull; 850m ASL</span>
+              </div>
+            </div>
+            <button class="app-icon-btn" onclick="refreshTelemetry()">⟲</button>
+          </div>
+
+          <!-- Hero Weather Card -->
+          <div class="hero-weather-card">
+            <div class="hw-top">
+              <span class="hw-temp" id="devTemp">24°</span>
+              <div class="hw-condition">
+                <span class="hw-icon" id="devIcon">⛅</span>
+                <span class="hw-label" id="devCondition">Scattered Monsoon Clouds</span>
+              </div>
+            </div>
+            <div class="hw-meta">
+              <span id="devHighLow">High: 28° &bull; Low: 19°</span>
+              <span id="devPrecip">Precipitation: 65% Expected</span>
+            </div>
+          </div>
+
+          <!-- Soil & Micro-climate Telemetry Grid -->
+          <div class="section-title">SOIL & CANOPY TELEMETRY</div>
+          
+          <div class="card-compose agro-card">
+            <div class="agro-row">
+              <div class="agro-item">
+                <span class="agro-lbl">SOIL MOISTURE (15cm)</span>
+                <span class="agro-val text-primary" id="devMoisture">78.4%</span>
+                <span class="agro-status">Optimal for vegetative growth</span>
+              </div>
+              <div class="agro-item">
+                <span class="agro-lbl">SOIL PH LEVEL</span>
+                <span class="agro-val" id="devPH">6.2 pH</span>
+                <span class="agro-status">Ideal root nutrient uptake</span>
+              </div>
+            </div>
+
+            <div class="moisture-meter">
+              <div class="moisture-fill" id="moistureFill" style="width: 78%;"></div>
+            </div>
+          </div>
+
+          <div class="card-compose agro-card">
+            <div class="agro-row">
+              <div class="agro-item">
+                <span class="agro-lbl">SOLAR RADIATION</span>
+                <span class="agro-val text-amber" id="devSolar">640 W/m²</span>
+                <span class="agro-status">High photosynthetic rate</span>
+              </div>
+              <div class="agro-item">
+                <span class="agro-lbl">CANOPY HUMIDITY</span>
+                <span class="agro-val" id="devHumidity">84%</span>
+                <span class="agro-status">Mild fungal spore alert</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hourly Rain Forecast Strip -->
+          <div class="section-title">24-HOUR AGRO FORECAST</div>
+          <div class="hourly-strip">
+            <div class="hourly-item active">
+              <span>Now</span>
+              <span class="h-icon">⛅</span>
+              <strong>24°</strong>
+            </div>
+            <div class="hourly-item">
+              <span>11 AM</span>
+              <span class="h-icon">🌧️</span>
+              <strong>26°</strong>
+            </div>
+            <div class="hourly-item">
+              <span>1 PM</span>
+              <span class="h-icon">⛈️</span>
+              <strong>27°</strong>
+            </div>
+            <div class="hourly-item">
+              <span>3 PM</span>
+              <span class="h-icon">🌦️</span>
+              <strong>25°</strong>
+            </div>
+            <div class="hourly-item">
+              <span>5 PM</span>
+              <span class="h-icon">⛅</span>
+              <strong>22°</strong>
+            </div>
+          </div>
+
+          <!-- Bottom Navigation Bar (Material 3) -->
+          <div class="m3-bottom-nav">
+            <div class="nav-btn active">
+              <span>🌾</span>
+              <small>AgroField</small>
+            </div>
+            <div class="nav-btn" onclick="alert('Soil Nitrate & Potassium sensor maps active.')">
+              <span>🧪</span>
+              <small>Soil Labs</small>
+            </div>
+            <div class="nav-btn" onclick="alert('Offline SMS sync buffer active across barangay co-ops.')">
+              <span>📡</span>
+              <small>Sync Mesh</small>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

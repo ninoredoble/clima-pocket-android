@@ -1,0 +1,504 @@
+/* ClimaPocket Android — Material You (M3) Studio & Emulator Styling
+   Color Palette: Soft Sky Sand (#f8f6f0), Forest Sage (#284835), Warm Earth Clay (#7d4f3b), Clean Slate (#1e242b)
+   Zero AI Slop: Authentic Android OS proportions, Material 3 rounded elevation surfaces, genuine phone frame. */
+
+:root {
+  --bg-studio: #0e1217;
+  --bg-docs: #131820;
+  
+  --m3-surface: #f4f6f0;
+  --m3-surface-variant: #e1e5dc;
+  --m3-primary: #2d5538;
+  --m3-primary-container: #c4ebd0;
+  --m3-on-primary: #ffffff;
+  --m3-text: #191d19;
+  --m3-text-muted: #5e645e;
+
+  --border-studio: rgba(255, 255, 255, 0.08);
+
+  --font-sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --radius-phone: 44px;
+  --radius-card: 22px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-studio);
+  color: #f1f5f9;
+  font-family: var(--font-sans);
+  height: 100vh;
+  display: flex;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.sky-gradient-ambient {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 80% 20%, rgba(45, 85, 56, 0.15) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* Studio Shell */
+.studio-shell {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 500px 1fr;
+  height: 100vh;
+  z-index: 10;
+}
+
+/* Left: Documentation Column */
+.docs-column {
+  background: var(--bg-docs);
+  border-right: 1px solid var(--border-studio);
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  overflow-y: auto;
+}
+
+.platform-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #34d399;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.docs-header h2 {
+  font-size: 24px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.arch-desc {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #94a3b8;
+  line-height: 1.5;
+  margin-top: 6px;
+}
+
+.selector-group label {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #64748b;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.station-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.station-chip {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-studio);
+  padding: 10px 14px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.station-chip:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.station-chip.active {
+  background: rgba(52, 211, 153, 0.1);
+  border-color: #34d399;
+}
+
+.station-chip strong {
+  font-size: 13px;
+  color: #ffffff;
+}
+
+.station-chip span {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: #94a3b8;
+}
+
+/* Compose Code Box */
+.compose-code-box {
+  background: #090c10;
+  border: 1px solid var(--border-studio);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.code-box-header {
+  background: #0f141c;
+  padding: 8px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #94a3b8;
+  border-bottom: 1px solid var(--border-studio);
+}
+
+.code-tag {
+  color: #38bdf8;
+  font-weight: 600;
+}
+
+.code-display {
+  padding: 14px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.55;
+  color: #cbd5e1;
+  overflow-x: auto;
+}
+
+.stack-footer {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: auto;
+}
+
+.tag {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-studio);
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: #94a3b8;
+}
+
+/* Right: Android Emulator Column */
+.device-column {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.phone-frame {
+  width: 380px;
+  height: 780px;
+  background: #000000;
+  border-radius: var(--radius-phone);
+  border: 8px solid #232a35;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Island Notch */
+.device-island {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 18px;
+  background: #000000;
+  border-radius: 20px;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.camera-lens {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #111a24;
+}
+
+/* Status Bar */
+.device-status-bar {
+  padding: 12px 22px 4px 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--m3-surface);
+  color: var(--m3-text);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  z-index: 30;
+}
+
+.status-icons {
+  display: flex;
+  gap: 8px;
+  font-size: 10px;
+}
+
+/* App Screen */
+.app-screen {
+  flex: 1;
+  background: var(--m3-surface);
+  color: var(--m3-text);
+  display: flex;
+  flex-direction: column;
+  padding: 16px 18px;
+  gap: 14px;
+  overflow-y: auto;
+}
+
+/* App Top Nav */
+.app-top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 4px;
+}
+
+.location-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.loc-pin {
+  font-size: 16px;
+}
+
+.location-group h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--m3-text);
+  line-height: 1.1;
+}
+
+.loc-prov {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  color: var(--m3-text-muted);
+}
+
+.app-icon-btn {
+  background: var(--m3-surface-variant);
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Hero Weather Card */
+.hero-weather-card {
+  background: var(--m3-primary-container);
+  border-radius: var(--radius-card);
+  padding: 18px 20px;
+  color: var(--m3-primary);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.hw-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hw-temp {
+  font-size: 44px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.hw-condition {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-align: right;
+}
+
+.hw-icon {
+  font-size: 24px;
+}
+
+.hw-label {
+  font-size: 12px;
+  font-weight: 700;
+  max-width: 110px;
+  line-height: 1.2;
+}
+
+.hw-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10.5px;
+  font-weight: 600;
+  opacity: 0.85;
+}
+
+/* Section Title */
+.section-title {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--m3-text-muted);
+  margin-top: 4px;
+}
+
+/* Agro Cards */
+.agro-card {
+  background: var(--m3-surface-variant);
+  border-radius: 16px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.agro-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.agro-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.agro-lbl {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  font-weight: 700;
+  color: var(--m3-text-muted);
+}
+
+.agro-val {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--m3-text);
+  margin: 2px 0;
+}
+
+.text-primary { color: var(--m3-primary); }
+.text-amber { color: #b45309; }
+
+.agro-status {
+  font-size: 9px;
+  color: var(--m3-text-muted);
+  line-height: 1.2;
+}
+
+.moisture-meter {
+  height: 6px;
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.moisture-fill {
+  height: 100%;
+  background: var(--m3-primary);
+  border-radius: 3px;
+  transition: width 0.3s;
+}
+
+/* Hourly Strip */
+.hourly-strip {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+}
+
+.hourly-strip::-webkit-scrollbar { display: none; }
+
+.hourly-item {
+  background: var(--m3-surface-variant);
+  padding: 8px 12px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 58px;
+  font-size: 10.5px;
+}
+
+.hourly-item.active {
+  background: var(--m3-primary);
+  color: #ffffff;
+}
+
+.h-icon {
+  font-size: 14px;
+}
+
+/* M3 Bottom Nav */
+.m3-bottom-nav {
+  margin-top: auto;
+  background: var(--m3-surface-variant);
+  border-radius: 20px;
+  padding: 6px 16px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.nav-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  font-size: 14px;
+  color: var(--m3-text-muted);
+  cursor: pointer;
+}
+
+.nav-btn.active {
+  color: var(--m3-primary);
+  font-weight: 700;
+}
+
+.nav-btn small {
+  font-size: 9px;
+}
+
+/* Responsive */
+@media (max-width: 960px) {
+  .studio-shell {
+    grid-template-columns: 1fr;
+    height: auto;
+    overflow-y: auto;
+  }
+  .docs-column {
+    border-right: none;
+    border-bottom: 1px solid var(--border-studio);
+  }
+}
