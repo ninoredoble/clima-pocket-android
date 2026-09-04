@@ -1,16 +1,5 @@
-/* ClimaPocket Android — Pixel 9 Pro Material You 3.5 Dynamic Studio
-   Design System:
-   - Floating ergonomic Pixel 9 Pro hardware frame (curved aluminum unibody, centered pill visor camera island, dynamic screen reflections)
-   - Dynamic Material You tonal palettes adapting to weather conditions:
-       * Sun/Clear: Warm Amber / Terracotta (#fff8f0 / #f26419 / #331b0a)
-       * Overcast/Monsoon: Moss Slate / Sage Forest (#f4f7f4 / #2d5a3f / #152b1e)
-       * Mountain Rain: Deep Mineral Teal / Dew Aqua (#edf6f9 / #1d6f8a / #072b38)
-   - Real interactive phone controls (interactive volume rocker, physical power button, tactile swipeable bottom nav)
-   - Studio tab bar switching between:
-       1. Phone Viewport (Interactive Android 15 Device)
-       2. Jetpack Compose UI Source Code (Interactive syntax-highlighted Kotlin)
-       3. Offline Room DB & Sensor Telemetry Schema
-*/
+/* ClimaPocket Android - Pixel 9 Pro Material You 3.5 Dynamic Studio */
+/* Character Encoding: 100% 7-Bit ASCII - Clean Typography & Android Standards */
 
 :root {
   --studio-bg: #090c10;
@@ -32,6 +21,10 @@
 
   --font-sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
+
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
 }
 
 * {
@@ -60,6 +53,7 @@ body {
   justify-content: space-between;
   align-items: center;
   flex-shrink: 0;
+  z-index: 20;
 }
 
 .studio-brand {
@@ -78,7 +72,8 @@ body {
   justify-content: center;
   color: #090c10;
   font-weight: 900;
-  font-size: 14px;
+  font-size: 11px;
+  font-family: var(--font-mono);
 }
 
 .studio-title-block h1 {
@@ -156,59 +151,77 @@ body {
   gap: 20px;
 }
 
+.catalog-sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.catalog-sidebar::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 2px;
+}
+
 .section-kicker {
   font-family: var(--font-mono);
   font-size: 9.5px;
   font-weight: 700;
-  letter-spacing: 0.12em;
-  color: #64748b;
+  letter-spacing: 0.14em;
+  color: #3ddc84;
   text-transform: uppercase;
-  margin-bottom: 8px;
   display: block;
+  margin-bottom: 10px;
+}
+
+/* Tab Content Switcher */
+.tab-pane {
+  display: none;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tab-pane.active {
+  display: flex;
 }
 
 /* Station Cards */
 .station-grid {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .station-card {
-  background: rgba(255, 255, 255, 0.03);
+  background: #141a24;
   border: 1px solid var(--studio-border);
-  border-radius: 12px;
-  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  text-align: left;
+  transition: all 0.2s;
 }
 
 .station-card:hover {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.15);
-  transform: translateX(3px);
+  background: #1c2433;
+  border-color: rgba(61, 220, 132, 0.3);
 }
 
 .station-card.active {
   background: rgba(61, 220, 132, 0.08);
   border-color: #3ddc84;
+  box-shadow: 0 0 12px rgba(61, 220, 132, 0.15);
 }
 
 .stn-info h4 {
   font-size: 13.5px;
   font-weight: 700;
   color: #ffffff;
-  margin-bottom: 2px;
 }
 
 .stn-info p {
-  font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   color: #94a3b8;
+  margin-top: 2px;
 }
 
 .stn-stat {
@@ -216,405 +229,479 @@ body {
 }
 
 .stn-temp {
+  font-family: var(--font-mono);
   font-size: 18px;
   font-weight: 800;
   color: #ffffff;
 }
 
 .stn-moist {
-  font-family: var(--font-mono);
-  font-size: 9.5px;
+  font-size: 10.5px;
   color: #3ddc84;
+  font-family: var(--font-mono);
 }
 
-/* Tab View Switcher for Left Panel */
-.tab-content-area {
-  flex: 1;
+/* Agrometeorology Calculator Card */
+.agro-calc-box {
+  background: #121720;
+  border: 1px solid var(--studio-border);
+  border-radius: var(--radius-md);
+  padding: 16px;
   display: flex;
-  flex-direction: column;
-}
-
-.tab-pane {
-  display: none;
   flex-direction: column;
   gap: 12px;
 }
 
-.tab-pane.active {
-  display: flex;
-}
-
-/* Code & Architecture Display */
-.code-viewer-container {
-  background: #090c10;
-  border: 1px solid var(--studio-border);
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.code-viewer-head {
-  background: #141922;
-  padding: 8px 14px;
+.calc-header {
   display: flex;
   justify-content: space-between;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: #94a3b8;
-  border-bottom: 1px solid var(--studio-border);
+  align-items: center;
 }
 
-.code-block {
+.calc-header h5 {
+  font-size: 12px;
+  font-weight: 700;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.calc-badge {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 12px;
+  background: rgba(61, 220, 132, 0.15);
+  color: #3ddc84;
+  border: 1px solid rgba(61, 220, 132, 0.3);
+}
+
+.calc-metric-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.calc-cell {
+  background: #0b0f15;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+}
+
+.calc-cell-val {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.calc-cell-lbl {
+  font-size: 9px;
+  color: #94a3b8;
+  margin-top: 1px;
+}
+
+.btn-export-agro {
+  background: rgba(61, 220, 132, 0.1);
+  border: 1px solid rgba(61, 220, 132, 0.3);
+  color: #3ddc84;
+  padding: 8px 12px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s;
+  text-align: center;
+}
+
+.btn-export-agro:hover {
+  background: #3ddc84;
+  color: #090c10;
+}
+
+/* Room DB Query Console */
+.room-query-box {
+  background: #0b0e14;
+  border: 1px solid var(--studio-border);
+  border-radius: var(--radius-md);
   padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.query-input-row {
+  display: flex;
+  gap: 8px;
+}
+
+.query-input-row input {
+  flex: 1;
+  background: #141b24;
+  border: 1px solid #2d3748;
+  padding: 6px 10px;
+  color: #ffffff;
   font-family: var(--font-mono);
   font-size: 11px;
-  line-height: 1.55;
-  color: #cbd5e1;
-  overflow-x: auto;
-  white-space: pre;
+  border-radius: var(--radius-sm);
+  outline: none;
 }
 
-/* Offline Room DB Table */
-.room-db-table {
+.btn-run-sql {
+  background: #3ddc84;
+  border: none;
+  color: #090c10;
+  padding: 6px 12px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.room-results-table {
   width: 100%;
   border-collapse: collapse;
   font-family: var(--font-mono);
-  font-size: 10px;
-  background: #090c10;
-  border: 1px solid var(--studio-border);
-  border-radius: 8px;
-  overflow: hidden;
+  font-size: 9.5px;
 }
 
-.room-db-table th {
+.room-results-table th {
   text-align: left;
-  background: #141922;
   color: #94a3b8;
-  padding: 8px 12px;
-  font-size: 9px;
-  border-bottom: 1px solid var(--studio-border);
+  padding-bottom: 4px;
+  border-bottom: 1px solid #2d3748;
 }
 
-.room-db-table td {
-  padding: 8px 12px;
+.room-results-table td {
+  padding: 4px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.04);
 }
 
-/* Right Stage: Pixel 9 Pro Device Presentation */
-.device-canvas {
+/* Code Preview Frame */
+.code-preview-frame {
+  background: #090c10;
+  border: 1px solid var(--studio-border);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 1.5;
+  color: #cbd5e1;
+  overflow-x: auto;
+  max-height: 480px;
+}
+
+.code-preview-frame pre {
+  white-space: pre;
+}
+
+/* Right: Pixel 9 Pro Emulation Stage */
+.phone-viewport-stage {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 32px;
-  background: radial-gradient(circle at 60% 30%, #151b24 0%, #090c10 80%);
+  background: radial-gradient(circle at 50% 50%, #151a24 0%, #090c10 100%);
+  padding: 24px;
   position: relative;
   overflow: hidden;
 }
 
-/* Pixel 9 Pro Hardware Unibody Frame */
-.pixel-hardware {
-  width: 375px;
-  height: 770px;
+/* Google Pixel 9 Pro Ergonomic Unibody Frame */
+.pixel-device-chassis {
+  width: 360px;
+  height: 720px;
   background: #1c2128;
   border-radius: 46px;
   padding: 10px;
   box-shadow: 
-    0 25px 80px rgba(0, 0, 0, 0.9),
-    0 0 0 1px rgba(255, 255, 255, 0.15),
-    inset 0 0 0 2px rgba(0, 0, 0, 0.5);
+    0 25px 60px rgba(0, 0, 0, 0.9),
+    inset 0 0 0 2px #444d56,
+    inset 0 0 0 4px #0d1117;
   position: relative;
   display: flex;
   flex-direction: column;
+}
+
+/* Pixel Camera Pill Island */
+.pixel-camera-island {
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 130px;
+  height: 28px;
+  background: #0d1117;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 14px;
+  z-index: 50;
+}
+
+.cam-lens {
+  width: 10px;
+  height: 10px;
+  background: #161b22;
+  border-radius: 50%;
+  border: 1.5px solid #30363d;
+}
+
+.cam-sensor {
+  width: 6px;
+  height: 6px;
+  background: #21262d;
+  border-radius: 50%;
 }
 
 /* Physical Hardware Buttons */
-.hw-power-button {
+.pixel-power-btn {
   position: absolute;
   right: -13px;
-  top: 170px;
+  top: 140px;
   width: 4px;
-  height: 48px;
-  background: #2e3644;
+  height: 45px;
+  background: #444d56;
   border-radius: 0 3px 3px 0;
-  box-shadow: 1px 0 2px rgba(0,0,0,0.5);
 }
 
-.hw-volume-rocker {
+.pixel-volume-btn {
   position: absolute;
   right: -13px;
-  top: 240px;
+  top: 205px;
   width: 4px;
   height: 90px;
-  background: #2e3644;
+  background: #444d56;
   border-radius: 0 3px 3px 0;
-  box-shadow: 1px 0 2px rgba(0,0,0,0.5);
 }
 
-/* Phone Screen (OLED Bezels) */
+/* Inside Screen Frame */
 .pixel-screen {
   flex: 1;
   background: var(--m3-bg);
-  color: var(--m3-text-headline);
-  border-radius: 36px;
-  overflow: hidden;
+  border-radius: 38px;
+  overflow-y: auto;
+  position: relative;
   display: flex;
   flex-direction: column;
-  position: relative;
-  transition: background-color 0.4s ease, color 0.4s ease;
+  transition: background-color 0.4s ease;
 }
 
-/* Centered Pill Visor Camera Island */
-.pixel-camera-visor {
-  position: absolute;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90px;
-  height: 22px;
-  background: #000000;
-  border-radius: 12px;
-  z-index: 50;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-}
-
-.camera-hole {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: #0d1218;
-  border: 1px solid #1e2633;
+.pixel-screen::-webkit-scrollbar {
+  display: none;
 }
 
 /* Android 15 Status Bar */
-.android-status-bar {
-  padding: 12px 22px 6px;
+.m3-status-bar {
+  padding: 10px 22px 4px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-family: var(--font-sans);
   font-size: 11px;
   font-weight: 700;
   color: var(--m3-text-headline);
   z-index: 40;
 }
 
-.status-cluster {
+.status-icons {
   display: flex;
-  align-items: center;
   gap: 6px;
   font-size: 10px;
 }
 
-/* App Viewport Scroll */
-.app-viewport-scroll {
-  flex: 1;
-  overflow-y: auto;
-  padding: 12px 18px 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  scrollbar-width: none;
-}
-
-.app-viewport-scroll::-webkit-scrollbar { display: none; }
-
-/* Station Top Bar */
-.phone-station-bar {
+/* Phone App Top Bar */
+.phone-top-bar {
+  padding: 10px 20px 4px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 4px 0;
 }
 
-.stn-title-group h2 {
-  font-size: 17px;
+.app-title-group h3 {
+  font-size: 18px;
   font-weight: 800;
   color: var(--m3-text-headline);
-  line-height: 1.15;
-}
-
-.stn-subline {
-  font-family: var(--font-mono);
-  font-size: 9.5px;
-  color: var(--m3-text-dim);
-}
-
-.phone-action-btn {
-  background: var(--m3-surface-tonal);
-  border: none;
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  color: var(--m3-primary);
-  transition: transform 0.3s;
-}
-
-/* Hero Weather Card (Material You) */
-.hero-weather-m3 {
-  background: var(--m3-primary-container);
-  border-radius: 26px;
-  padding: 22px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  color: var(--m3-primary);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
-}
-
-.hw-row-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.hw-temp-val {
-  font-size: 48px;
-  font-weight: 800;
-  line-height: 1;
-  letter-spacing: -0.03em;
-}
-
-.hw-condition-badge {
-  text-align: right;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.hw-condition-badge .c-icon {
-  font-size: 26px;
-}
-
-.hw-condition-badge .c-txt {
-  font-size: 12.5px;
-  font-weight: 700;
-  max-width: 110px;
   line-height: 1.2;
 }
 
-.hw-row-sub {
+.app-title-group p {
+  font-size: 11px;
+  color: var(--m3-text-dim);
+}
+
+.coop-badge {
+  background: var(--m3-primary-container);
+  color: var(--m3-primary);
+  font-size: 9.5px;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 12px;
+}
+
+/* Phone Scrollable Content Body */
+.phone-scroll-body {
+  padding: 12px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Hero Weather Card */
+.hw-hero-card {
+  background: var(--m3-surface);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: all 0.3s ease;
+}
+
+.hw-temp-row {
   display: flex;
   justify-content: space-between;
-  font-size: 11px;
-  font-weight: 600;
-  opacity: 0.85;
+  align-items: flex-start;
 }
 
-/* Agro Telemetry Cards */
-.m3-section-title {
-  font-family: var(--font-mono);
-  font-size: 9.5px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  color: var(--m3-text-dim);
-  text-transform: uppercase;
-}
-
-.agro-card-m3 {
-  background: var(--m3-surface);
-  border-radius: 20px;
-  padding: 16px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.dual-metric-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-
-.metric-cell-m3 {
-  display: flex;
-  flex-direction: column;
-}
-
-.cell-caption {
-  font-family: var(--font-mono);
-  font-size: 8.5px;
-  font-weight: 700;
-  color: var(--m3-text-dim);
-}
-
-.cell-big-val {
-  font-size: 19px;
+.hw-big-temp {
+  font-size: 52px;
   font-weight: 800;
+  line-height: 0.95;
   color: var(--m3-text-headline);
-  margin: 2px 0;
 }
 
-.cell-context {
-  font-size: 9.5px;
+.hw-condition-text {
+  font-size: 14px;
+  font-weight: 700;
   color: var(--m3-text-body);
-  line-height: 1.25;
+  margin-top: 6px;
 }
 
-/* Moisture Meter Bar */
-.moisture-track {
-  height: 7px;
-  background: var(--m3-surface-variant);
-  border-radius: 4px;
-  overflow: hidden;
+.hw-high-low {
+  font-size: 11.5px;
+  color: var(--m3-text-dim);
 }
 
-.moisture-fill-bar {
-  height: 100%;
-  background: var(--m3-primary);
-  border-radius: 4px;
-  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+.hw-condition-badge {
+  background: var(--m3-surface-tonal);
+  padding: 8px 12px;
+  border-radius: 14px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--m3-primary);
 }
 
-/* Hourly Forecast Ribbon */
-.hourly-ribbon {
+/* Metric Sub-Grid Inside Hero */
+.hw-meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  border-top: 1px solid var(--m3-surface-tonal);
+  padding-top: 12px;
+}
+
+.hw-meta-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.hw-m-val {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--m3-text-headline);
+}
+
+.hw-m-lbl {
+  font-size: 9px;
+  color: var(--m3-text-dim);
+  margin-top: 1px;
+}
+
+/* 24-Hour Forecast Horizontal Scroller */
+.hourly-forecast-row {
   display: flex;
   gap: 8px;
   overflow-x: auto;
-  scrollbar-width: none;
-  padding-bottom: 2px;
+  padding-bottom: 4px;
 }
 
-.hourly-ribbon::-webkit-scrollbar { display: none; }
+.hourly-forecast-row::-webkit-scrollbar {
+  display: none;
+}
 
-.h-tile {
+.hour-pill {
   background: var(--m3-surface);
-  min-width: 58px;
-  padding: 10px 8px;
-  border-radius: 16px;
+  border-radius: 14px;
+  padding: 10px 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 4px;
-  font-size: 10.5px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.02);
+  min-width: 58px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
 }
 
-.h-tile.current-now {
-  background: var(--m3-primary);
-  color: #ffffff;
+.hour-time {
+  font-size: 9.5px;
+  color: var(--m3-text-dim);
 }
 
-.h-tile strong {
-  font-size: 11.5px;
+.hour-temp {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--m3-text-headline);
 }
 
-/* Material 3 Bottom Navigation Bar */
-.m3-navigation-bar {
+.hour-rain {
+  font-size: 8.5px;
+  color: #3b82f6;
+  font-weight: 600;
+}
+
+/* Crop Advisory Card */
+.crop-advisory-card {
   background: var(--m3-surface);
-  border-radius: 28px;
-  padding: 6px 18px;
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.advisory-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--m3-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.advisory-body {
+  font-size: 11px;
+  line-height: 1.45;
+  color: var(--m3-text-body);
+}
+
+/* Bottom Navigation Bar M3 */
+.phone-bottom-nav {
+  margin-top: auto;
+  background: var(--m3-surface-tonal);
+  padding: 8px 16px 14px;
   display: flex;
   justify-content: space-around;
-  align-items: center;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
-  margin-top: auto;
+  border-radius: 24px 24px 0 0;
 }
 
 .nav-item-m3 {
@@ -622,11 +709,9 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 2px;
+  font-size: 9.5px;
   color: var(--m3-text-dim);
   cursor: pointer;
-  padding: 4px 8px;
-  border-radius: 16px;
-  transition: all 0.15s;
 }
 
 .nav-item-m3.active {
@@ -634,33 +719,19 @@ body {
   font-weight: 700;
 }
 
-.nav-item-m3 span {
-  font-size: 16px;
-}
-
-.nav-item-m3 small {
-  font-size: 9.5px;
-}
-
-/* Gesture Bar */
-.pixel-gesture-bar {
-  width: 72px;
-  height: 4px;
-  background: var(--m3-text-dim);
-  border-radius: 2px;
-  margin: 8px auto 4px;
-  opacity: 0.4;
-}
-
 /* Responsive */
-@media (max-width: 980px) {
+@media (max-width: 1080px) {
   .studio-stage {
     grid-template-columns: 1fr;
     height: auto;
     overflow-y: auto;
   }
   .catalog-sidebar {
+    height: auto;
     border-right: none;
     border-bottom: 1px solid var(--studio-border);
+  }
+  .phone-viewport-stage {
+    min-height: 780px;
   }
 }
