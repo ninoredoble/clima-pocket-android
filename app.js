@@ -1,487 +1,361 @@
-/**
- * ClimaPocket Android - Material You 3.5 Agrometeorological Studio
- * 100% 7-Bit ASCII Character Encoding - Zero Mojibake
- * Jetpack Compose 1.7 & FAO-56 Penman-Monteith Evapotranspiration Physics
- */
+/* ClimaPocket design study.
+   Everything below is sample data produced by a few written rules.
+   Nothing is measured, fetched or forecast. */
+(() => {
+  'use strict';
 
-// 1. Northern Mindanao Agro-Climatic Stations
-const STATIONS = {
-  claveria: {
-    id: "STN-MIN-01",
-    name: "Claveria Station",
-    fullName: "Claveria Highland Station",
-    sub: "Bukidnon High Elevation Grid // 980m",
-    coop: "NORTHERN MIN-COOP",
-    elev: 980,
-    temp: 22.4,
-    rh: 88,
-    wind: 2.1,
-    rad: 18.5,
-    smd: 14.2,
-    high: 26.8,
-    low: 19.2,
-    condition: "Highland Canopy Mist",
-    themeBadge: "MOSS PALETTE",
-    crop: "Arabica Coffee & Sweet Corn",
-    theme: {
-      bg: "#f5f8f5",
-      surface: "#ffffff",
-      surfaceTonal: "#e6ede6",
-      primary: "#235336",
-      primaryContainer: "#c4ebd0",
-      accent: "#e07a5f",
-      textHeadline: "#122117",
-      textBody: "#425247",
-      textDim: "#718578"
-    },
-    advisoryTitle: "FIELD ADVISORY // SAFE SPRAY WINDOW",
-    advisoryBody: "Canopy wind speed at 2.1 m/s provides low risk of pesticide droplet drift. High relative humidity (88%) delays evaporation, optimizing foliar absorption for Arabica coffee trees."
-  },
-  manolo: {
-    id: "STN-MIN-02",
-    name: "Manolo Fortich Station",
-    fullName: "Manolo Fortich Foothills",
-    sub: "Del Monte Agro Basin // 650m",
-    coop: "BUKIDNON PINE-COOP",
-    elev: 650,
-    temp: 25.1,
-    rh: 76,
-    wind: 3.4,
-    rad: 22.0,
-    smd: 28.5,
-    high: 29.5,
-    low: 21.0,
-    condition: "Partly Cloudy Foothill",
-    themeBadge: "AMBER PALETTE",
-    crop: "Del Monte Pineapple & Cacao",
-    theme: {
-      bg: "#fcf9f2",
-      surface: "#ffffff",
-      surfaceTonal: "#f5eedd",
-      primary: "#78590c",
-      primaryContainer: "#fce8b8",
-      accent: "#b85b28",
-      textHeadline: "#241a02",
-      textBody: "#54441f",
-      textDim: "#877348"
-    },
-    advisoryTitle: "FIELD ADVISORY // TRANSPIRATION SURGE",
-    advisoryBody: "Solar irradiance at 22.0 MJ/m2 accelerates vegetative evapotranspiration. Secondary drip irrigation recommended for young cacao seedlings on south-facing terraces."
-  },
-  carmen: {
-    id: "STN-MIN-03",
-    name: "Carmen River Station",
-    fullName: "Carmen Valley Floodplain",
-    sub: "Cagayan River Lowland // 25m",
-    coop: "CAGAYAN ALLUVIAL COOP",
-    elev: 25,
-    temp: 30.8,
-    rh: 64,
-    wind: 4.8,
-    rad: 24.5,
-    smd: 42.1,
-    high: 33.2,
-    low: 25.4,
-    condition: "Alluvial Sun / Breezy",
-    themeBadge: "TERRACOTTA PALETTE",
-    crop: "Citrus & Alluvial Vegetables",
-    theme: {
-      bg: "#faf5f3",
-      surface: "#ffffff",
-      surfaceTonal: "#f2e5e0",
-      primary: "#853b21",
-      primaryContainer: "#fad2c5",
-      accent: "#cf5c36",
-      textHeadline: "#291008",
-      textBody: "#592b1d",
-      textDim: "#8f5746"
-    },
-    advisoryTitle: "FIELD ADVISORY // CAUTION HIGH DRIFT",
-    advisoryBody: "Thermal updrafts and 4.8 m/s valley gusts exceed safe aerial application threshold. Postpone drone spraying until evening katabatic wind inversion after 17:30."
-  },
-  malaybalay: {
-    id: "STN-MIN-04",
-    name: "Malaybalay Station",
-    fullName: "Malaybalay High Plain",
-    sub: "Central High Valley // 622m",
-    coop: "VALLEY CANE-COOP",
-    elev: 622,
-    temp: 24.6,
-    rh: 80,
-    wind: 2.8,
-    rad: 20.0,
-    smd: 19.4,
-    high: 28.0,
-    low: 20.1,
-    condition: "Afternoon Orographic Cloud",
-    themeBadge: "PINE PALETTE",
-    crop: "Highland Sugarcane & Arabica",
-    theme: {
-      bg: "#f4f8f7",
-      surface: "#ffffff",
-      surfaceTonal: "#e2edeb",
-      primary: "#1c4f4b",
-      primaryContainer: "#bee3df",
-      accent: "#368f8b",
-      textHeadline: "#0d2422",
-      textBody: "#385451",
-      textDim: "#6a8784"
-    },
-    advisoryTitle: "FIELD ADVISORY // PRE-RAIN WINDOW",
-    advisoryBody: "Orographic buildup observed at Kitanglad ridge. Fertigation must complete within 2 hours to prevent active nitrate washout from anticipated convection."
-  },
-  maramag: {
-    id: "STN-MIN-05",
-    name: "Maramag Station",
-    fullName: "Maramag Irrigation Basin",
-    sub: "Pulangi Watershed // 340m",
-    coop: "PULANGI RICE-COOP",
-    elev: 340,
-    temp: 28.3,
-    rh: 72,
-    wind: 2.5,
-    rad: 21.5,
-    smd: 35.0,
-    high: 31.5,
-    low: 23.8,
-    condition: "Humid Tropical Basin",
-    themeBadge: "VERDANT PALETTE",
-    crop: "Lowland Paddy Rice & Corn",
-    theme: {
-      bg: "#f4f8f4",
-      surface: "#ffffff",
-      surfaceTonal: "#e0eee0",
-      primary: "#20562e",
-      primaryContainer: "#c2eac9",
-      accent: "#43aa8b",
-      textHeadline: "#0f2916",
-      textBody: "#3d5742",
-      textDim: "#6a856f"
-    },
-    advisoryTitle: "FIELD ADVISORY // PADDY WATER RETENTION",
-    advisoryBody: "Solar radiation and relative humidity promote steady tillering. Sluice gate outflow should maintain 5cm water level to preserve nitrogen uptake."
-  }
-};
+  // ---- The rules -----------------------------------------------------------
+  const LAPSE = 6.5;          // °C lost per km of climb
+  const DEW_COAST = 21.5;     // dew point at the coast, °C (invented)
+  const METRES_PER_DEG = 125; // cloud base: metres per °C of dew-point gap
+  const SUNRISE = 5.7, SUNSET = 17.7;
 
-let currentStnKey = "claveria";
-
-// 2. Room SQLite In-Memory Database Simulation
-let roomDbCache = [
-  { id: 1, station: "Claveria Highland", temp: 22.4, rh: 88, et0: 3.42, risk: "SAFE", sync: "2026-09-05 09:30" },
-  { id: 2, station: "Manolo Fortich", temp: 25.1, rh: 76, et0: 4.15, risk: "SAFE", sync: "2026-09-05 09:25" },
-  { id: 3, station: "Carmen Valley", temp: 30.8, rh: 64, et0: 5.68, risk: "UNSAFE", sync: "2026-09-05 09:20" },
-  { id: 4, station: "Malaybalay High", temp: 24.6, rh: 80, et0: 3.85, risk: "SAFE", sync: "2026-09-05 09:15" },
-  { id: 5, station: "Maramag Basin", temp: 28.3, rh: 72, et0: 4.60, risk: "SAFE", sync: "2026-09-05 09:10" }
-];
-
-// 3. FAO-56 Penman-Monteith Evapotranspiration Calculator
-function computeFao56(temp, rh, wind, rad) {
-  // Slope of vapor pressure curve (Delta, kPa/C)
-  const delta = (4098 * (0.6108 * Math.exp((17.27 * temp) / (temp + 237.3)))) / Math.pow(temp + 237.3, 2);
-  
-  // Psychrometric constant (gamma, kPa/C)
-  const gamma = 0.066;
-  
-  // Saturation vapor pressure (es, kPa)
-  const es = 0.6108 * Math.exp((17.27 * temp) / (temp + 237.3));
-  
-  // Actual vapor pressure (ea, kPa)
-  const ea = es * (rh / 100.0);
-  
-  // Net radiation equivalent (Rn - G, MJ/m2/d converted to mm/d equivalent)
-  const rn = 0.77 * rad * 0.408;
-  
-  // FAO-56 Equation:
-  const numerator = (0.408 * delta * rn) + (gamma * (900 / (temp + 273)) * wind * (es - ea));
-  const denominator = delta + (gamma * (1 + 0.34 * wind));
-  const et0 = Math.max(0.5, (numerator / denominator));
-
-  // Spray drift index based on wind velocity
-  let driftStatus = "SAFE";
-  let driftIndex = (wind / 5.0).toFixed(2);
-  let badgeColor = "#3ddc84";
-
-  if (wind < 1.5) {
-    driftStatus = "CAUTION (STAGNANT)";
-    badgeColor = "#f59e0b";
-  } else if (wind <= 3.5) {
-    driftStatus = "OPTIMAL SAFE";
-    badgeColor = "#3ddc84";
-  } else if (wind <= 5.5) {
-    driftStatus = "ELEVATED DRIFT";
-    badgeColor = "#f59e0b";
-  } else {
-    driftStatus = "CRITICAL UNSAFE";
-    badgeColor = "#ef4444";
-  }
-
-  // Fungal spore risk
-  let fungal = "NORMAL";
-  if (rh >= 85 && temp >= 20 && temp <= 27) {
-    fungal = "ELEVATED (BLIGHT RISK)";
-  } else if (rh >= 75) {
-    fungal = "MODERATE";
-  }
-
-  // Moisture Deficit Estimation
-  const deficit = Math.max(5.0, (et0 * 3.8 + (30 - rh * 0.2))).toFixed(1);
-
-  return {
-    et0: et0.toFixed(2),
-    driftStatus: driftStatus,
-    driftIndex: driftIndex,
-    badgeColor: badgeColor,
-    fungal: fungal,
-    deficit: deficit
+  const gauss = (h, mu, sd) => {
+    let d = Math.abs(h - mu);
+    d = Math.min(d, 24 - d);
+    return Math.exp(-(d * d) / (2 * sd * sd));
   };
-}
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+  const smooth = (a, b, v) => { const t = clamp((v - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); };
 
-// 4. Update UI Components
-function renderStation(key) {
-  currentStnKey = key;
-  const s = STATIONS[key];
-  if (!s) return;
+  const coastTemp = h => 26.5 + 4 * Math.cos(2 * Math.PI * (h - 14.5) / 24);
+  const cloudBase = h => METRES_PER_DEG * (coastTemp(h) - DEW_COAST);
+  const convection = h => gauss(h, 15.2, 3.2);
+  const deckDepth = h => 300 + 500 * convection(h); // metres of cloud above its base
 
-  // Update card active states
-  document.querySelectorAll(".station-card").forEach(c => {
-    if (c.getAttribute("data-stn") === key) {
-      c.classList.add("active");
-    } else {
-      c.classList.remove("active");
-    }
-  });
-
-  // Apply Material You 3.5 Theme Tokens to Phone Screen
-  const screen = document.getElementById("pixelScreen");
-  if (screen) {
-    screen.style.setProperty("--m3-bg", s.theme.bg);
-    screen.style.setProperty("--m3-surface", s.theme.surface);
-    screen.style.setProperty("--m3-surface-tonal", s.theme.surfaceTonal);
-    screen.style.setProperty("--m3-primary", s.theme.primary);
-    screen.style.setProperty("--m3-primary-container", s.theme.primaryContainer);
-    screen.style.setProperty("--m3-accent", s.theme.accent);
-    screen.style.setProperty("--m3-text-headline", s.theme.textHeadline);
-    screen.style.setProperty("--m3-text-body", s.theme.textBody);
-    screen.style.setProperty("--m3-text-dim", s.theme.textDim);
+  function conditions(z, h) {
+    const t = coastTemp(h) - LAPSE * z / 1000;
+    const base = cloudBase(h);
+    const top = base + deckDepth(h);
+    const inCloud = z >= base - 15 && z <= top;
+    const above = z > top;
+    const gap = inCloud ? 0 : above ? 2 + (z - top) / 200 : (base - z) / METRES_PER_DEG;
+    const td = t - gap;
+    const rh = Math.min(100, 100 * Math.exp(17.625 * td / (243.04 + td) - 17.625 * t / (243.04 + t)));
+    const rain = clamp(0.04 + (0.62 * gauss(h, 15.5, 2.6) + 0.1 * gauss(h, 4.5, 3)) * (0.55 + 0.9 * z / 1000), 0, 0.92);
+    const wind = 6 + 8 * gauss(h, 13.5, 4) + 5 * z / 1000;
+    const cover = clamp(0.15 + 0.8 * convection(h) + (inCloud ? 0.7 : 0), 0, 1);
+    return { t, base, top, inCloud, above, rh, rain, wind, cover };
   }
 
-  // Update Phone Hardware Display
-  document.getElementById("phoneStationName").textContent = s.name;
-  document.getElementById("phoneStationSub").textContent = s.sub;
-  document.getElementById("phoneCoopBadge").textContent = s.coop;
-  document.getElementById("phoneTemp").innerHTML = s.temp.toFixed(1) + "&deg;";
-  document.getElementById("phoneCondition").textContent = s.condition;
-  document.getElementById("phoneHighLow").innerHTML = "H: " + s.high.toFixed(1) + "&deg; &bull; L: " + s.low.toFixed(1) + "&deg;";
-  document.getElementById("phoneThemeBadge").textContent = s.themeBadge;
-  document.getElementById("phoneHumidity").textContent = s.rh + "%";
-  document.getElementById("phoneWind").textContent = s.wind + " m/s";
+  function describe(c, night) {
+    if (c.inCloud) return night ? 'Misty night' : 'Wrapped in cloud';
+    if (c.above) return 'Above the cloud';
+    if (c.rain >= 0.6) return 'Showers likely';
+    if (c.rain >= 0.35) return 'Showers building';
+    if (c.cover < 0.35) return night ? 'Clear night' : 'Clear';
+    if (c.cover < 0.7) return 'Partly cloudy';
+    return 'Cloudy';
+  }
 
-  // Compute Physics
-  const phys = computeFao56(s.temp, s.rh, s.wind, s.rad);
-  document.getElementById("phoneEt0").textContent = phys.et0 + " mm/d";
-  document.getElementById("phoneAdvisoryTitle").textContent = s.advisoryTitle;
-  document.getElementById("phoneAdvisoryBody").textContent = s.advisoryBody;
-
-  // Sync with Calculator Controls
-  document.getElementById("sliderTemp").value = s.temp;
-  document.getElementById("sliderRh").value = s.rh;
-  document.getElementById("sliderWind").value = s.wind;
-  document.getElementById("sliderRad").value = s.rad;
-  updateCalcOutputs();
-
-  // Render 24-Hour Diurnal Timeline
-  renderDiurnalHourly(s);
-}
-
-// 5. Render Diurnal Hourly Timeline
-function renderDiurnalHourly(s) {
-  const container = document.getElementById("phoneHourly");
-  if (!container) return;
-
-  const hours = [
-    { t: "06:00", dt: -2.5, rain: "10%" },
-    { t: "09:00", dt: 0.0, rain: "15%" },
-    { t: "12:00", dt: +3.2, rain: "25%" },
-    { t: "15:00", dt: +4.0, rain: "40%" },
-    { t: "18:00", dt: +0.5, rain: "30%" },
-    { t: "21:00", dt: -1.8, rain: "15%" },
-    { t: "00:00", dt: -3.0, rain: "5%" },
-    { t: "03:00", dt: -3.6, rain: "5%" }
+  // ---- The slope -----------------------------------------------------------
+  // Control points: [position 0..1 across the scene, elevation in metres].
+  const PLACES = [
+    { name: 'Carmen', x: 0.10, z: 25 },
+    { name: 'Maramag', x: 0.40, z: 340 },
+    { name: 'Malaybalay', x: 0.68, z: 620 },
+    { name: 'Claveria', x: 0.90, z: 980 },
   ];
+  const KNOTS = [[0, 0], ...PLACES.map(p => [p.x, p.z]), [1, 1060]];
 
-  let html = "";
-  hours.forEach(h => {
-    const tempVal = (s.temp + h.dt).toFixed(1);
-    html += '<div class="hour-pill">' +
-      '<span class="hour-time">' + h.t + '</span>' +
-      '<span class="hour-temp">' + tempVal + '&deg;</span>' +
-      '<span class="hour-rain">' + h.rain + '</span>' +
-    '</div>';
-  });
-
-  container.innerHTML = html;
-}
-
-// 6. Update Calculator UI Outputs
-function updateCalcOutputs() {
-  const temp = parseFloat(document.getElementById("sliderTemp").value);
-  const rh = parseFloat(document.getElementById("sliderRh").value);
-  const wind = parseFloat(document.getElementById("sliderWind").value);
-  const rad = parseFloat(document.getElementById("sliderRad").value);
-
-  document.getElementById("calcTempDisp").innerHTML = temp.toFixed(1) + "&deg;C";
-  document.getElementById("calcRhDisp").textContent = rh + "%";
-  document.getElementById("calcWindDisp").textContent = wind.toFixed(1) + " m/s";
-  document.getElementById("calcRadDisp").textContent = rad.toFixed(1) + " MJ/m2";
-
-  const phys = computeFao56(temp, rh, wind, rad);
-  document.getElementById("calcEt0").textContent = phys.et0 + " mm/d";
-  document.getElementById("calcDriftRisk").textContent = phys.driftStatus;
-  document.getElementById("calcFungalRisk").textContent = phys.fungal;
-  document.getElementById("calcDeficit").textContent = phys.deficit + " mm";
-
-  const badge = document.getElementById("sprayStatusBadge");
-  if (badge) {
-    badge.textContent = phys.driftStatus;
-    badge.style.color = phys.badgeColor;
-    badge.style.borderColor = phys.badgeColor;
-  }
-}
-
-// 7. Render Room DB Table
-function renderRoomTable(records) {
-  const tbody = document.getElementById("roomTbody");
-  if (!tbody) return;
-
-  if (!records || records.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 12px; color:#64748b;">No matching cache rows found.</td></tr>';
-    return;
-  }
-
-  let html = "";
-  records.forEach(r => {
-    html += '<tr>' +
-      '<td>' + r.id + '</td>' +
-      '<td>' + r.station + '</td>' +
-      '<td>' + r.temp.toFixed(1) + '&deg;C</td>' +
-      '<td>' + r.rh + '%</td>' +
-      '<td>' + r.et0.toFixed(2) + '</td>' +
-      '<td>' + r.sync + '</td>' +
-    '</tr>';
-  });
-  tbody.innerHTML = html;
-}
-
-// 8. Event Listeners Setup
-document.addEventListener("DOMContentLoaded", function() {
-
-  // Studio Top Tabs Navigation
-  document.querySelectorAll(".s-tab-btn").forEach(btn => {
-    btn.addEventListener("click", function() {
-      const targetId = this.getAttribute("data-tab");
-      document.querySelectorAll(".s-tab-btn").forEach(b => b.classList.remove("active"));
-      this.classList.add("active");
-
-      document.querySelectorAll(".tab-pane").forEach(pane => {
-        pane.classList.remove("active");
-        if (pane.id === targetId) {
-          pane.classList.add("active");
-        }
-      });
-    });
-  });
-
-  // Station Cards Click
-  document.querySelectorAll(".station-card").forEach(card => {
-    card.addEventListener("click", function() {
-      const key = this.getAttribute("data-stn");
-      renderStation(key);
-    });
-  });
-
-  // Sliders Input Events
-  ["sliderTemp", "sliderRh", "sliderWind", "sliderRad"].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.addEventListener("input", updateCalcOutputs);
+  // Monotone cubic (Fritsch–Carlson) so the profile passes through every place.
+  const slopes = (() => {
+    const n = KNOTS.length, d = [], m = [];
+    for (let i = 0; i < n - 1; i++) d[i] = (KNOTS[i + 1][1] - KNOTS[i][1]) / (KNOTS[i + 1][0] - KNOTS[i][0]);
+    m[0] = d[0]; m[n - 1] = d[n - 2];
+    for (let i = 1; i < n - 1; i++) m[i] = d[i - 1] * d[i] <= 0 ? 0 : (d[i - 1] + d[i]) / 2;
+    for (let i = 0; i < n - 1; i++) {
+      if (d[i] === 0) { m[i] = m[i + 1] = 0; continue; }
+      const a = m[i] / d[i], b = m[i + 1] / d[i], s = a * a + b * b;
+      if (s > 9) { const k = 3 / Math.sqrt(s); m[i] = k * a * d[i]; m[i + 1] = k * b * d[i]; }
     }
+    return m;
+  })();
+
+  function elevationAt(x) {
+    x = clamp(x, 0, 1);
+    let i = 0;
+    while (i < KNOTS.length - 2 && x > KNOTS[i + 1][0]) i++;
+    const [x0, y0] = KNOTS[i], [x1, y1] = KNOTS[i + 1], h = x1 - x0, t = (x - x0) / h;
+    const t2 = t * t, t3 = t2 * t;
+    return (2 * t3 - 3 * t2 + 1) * y0 + (t3 - 2 * t2 + t) * h * slopes[i] +
+           (-2 * t3 + 3 * t2) * y1 + (t3 - t2) * h * slopes[i + 1];
+  }
+
+  // ---- Scene geometry ------------------------------------------------------
+  const W = 390, H = 250;
+  const yOf = z => 224 - z * 0.14;
+  const fmt = n => String(Math.round(n)).padStart(2, '0');
+  const clock = h => { const m = Math.round(h * 4) * 15; return fmt(Math.floor(m / 60) % 24) + ':' + fmt(m % 60); };
+
+  const KEYS = [ // hour, sky colour
+    [0, '#0f1b31'], [4.8, '#1b2f48'], [6.2, '#e9a27c'], [8.5, '#86c0d8'],
+    [12.5, '#4fa3d1'], [16.2, '#7fb4d0'], [17.8, '#e6a35e'], [18.9, '#3b4659'],
+    [20.5, '#101c32'], [24, '#0f1b31'],
+  ].map(([h, c]) => [h, hex(c)]);
+
+  function hex(c) { return [1, 3, 5].map(i => parseInt(c.slice(i, i + 2), 16)); }
+  const mix = (a, b, t) => a.map((v, i) => v + (b[i] - v) * t);
+  const css = c => `rgb(${c.map(Math.round).join(',')})`;
+
+  function skyAt(h) {
+    let i = 0;
+    while (i < KEYS.length - 2 && h > KEYS[i + 1][0]) i++;
+    const [h0, c0] = KEYS[i], [h1, c1] = KEYS[i + 1];
+    return mix(c0, c1, (h - h0) / (h1 - h0));
+  }
+
+  // ---- DOM ------------------------------------------------------------------
+  const $ = id => document.getElementById(id);
+  const el = {
+    sky: $('sky'), sun: $('sun'), moon: $('moon'), stars: $('stars'),
+    far: $('farRidge'), mid: $('midRidge'), near: $('nearRidge'), dots: $('stationDots'),
+    cloud: $('cloud'), rain: $('rain'), pin: $('pin'), pinLabel: $('pinLabel'),
+    scene: $('scene'), slope: $('slope'), hour: $('hour'),
+    place: $('place'), sub: $('sub'), temp: $('temp'), cond: $('cond'), clock: $('clock'),
+    sRain: $('sRain'), sHum: $('sHum'), sWind: $('sWind'), sBase: $('sBase'),
+    nightBands: $('nightBands'), dry: $('dryBand'), bars: $('rainBars'),
+    line: $('tempLine'), scrub: $('scrub'), dot: $('tempDot'),
+    play: $('play'), places: $('places'), window: $('window'), live: $('live'),
+  };
+  const NS = 'http://www.w3.org/2000/svg';
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  // static pieces
+  const ridgePath = (pts, bottom) => 'M' + pts.map(p => p.join(',')).join(' L') + ` L${W},${bottom} L0,${bottom} Z`;
+  const wave = (base, amp, f, ph) => Array.from({ length: 27 }, (_, i) => {
+    const x = i * 15;
+    return [x, +(base - amp * (0.5 + 0.5 * Math.sin(x * f + ph)) - 0.12 * x * (1 - x / W)).toFixed(1)];
+  });
+  el.far.setAttribute('d', ridgePath(wave(150, 70, 0.021, 1.2), H));
+  el.mid.setAttribute('d', ridgePath(wave(180, 60, 0.016, 3.1), H));
+  const nearPts = Array.from({ length: 131 }, (_, i) => { const x = i * 3; return [x, +yOf(elevationAt(x / W)).toFixed(1)]; });
+  el.near.setAttribute('d', ridgePath(nearPts, H));
+
+  PLACES.forEach(p => {
+    const c = document.createElementNS(NS, 'circle');
+    c.setAttribute('cx', p.x * W); c.setAttribute('cy', yOf(p.z)); c.setAttribute('r', 3.5);
+    c.setAttribute('class', 'station');
+    el.dots.appendChild(c);
   });
 
-  // Room DB Quick SQL Buttons
-  document.getElementById("btnSqlAll").addEventListener("click", function() {
-    document.getElementById("sqlInput").value = "SELECT * FROM tbl_station_cache ORDER BY id ASC";
-    renderRoomTable(roomDbCache);
+  const starSpots = [[30, 24], [74, 52], [118, 18], [160, 40], [205, 14], [248, 46], [290, 22], [330, 56], [364, 20], [52, 90], [190, 80], [312, 96]];
+  starSpots.forEach(([x, y], i) => {
+    const c = document.createElementNS(NS, 'circle');
+    c.setAttribute('cx', x); c.setAttribute('cy', y); c.setAttribute('r', i % 3 ? 1.2 : 1.8);
+    el.stars.appendChild(c);
   });
 
-  document.getElementById("btnSqlHighTemp").addEventListener("click", function() {
-    document.getElementById("sqlInput").value = "SELECT * FROM tbl_station_cache WHERE temp > 25.0";
-    const filtered = roomDbCache.filter(r => r.temp > 25.0);
-    renderRoomTable(filtered);
+  // chart (358 x 104)
+  const CW = 358, CH = 92;
+  const cx = h => h / 24 * CW;
+  const cy = t => 9 + (32 - t) / 20 * 68;
+  const bar = (x, w, cls) => { const r = document.createElementNS(NS, 'rect'); r.setAttribute('x', x); r.setAttribute('width', w); r.setAttribute('y', 0); r.setAttribute('height', CH); r.setAttribute('class', cls); return r; };
+  el.nightBands.append(bar(0, cx(SUNRISE), 'night'), bar(cx(SUNSET), CW - cx(SUNSET), 'night'));
+  const rainRects = Array.from({ length: 48 }, (_, i) => {
+    const r = document.createElementNS(NS, 'rect');
+    r.setAttribute('x', cx(i / 2) + 0.8); r.setAttribute('width', CW / 48 - 1.6); r.setAttribute('rx', 2);
+    el.bars.appendChild(r);
+    return r;
   });
 
-  document.getElementById("btnSqlAdvisory").addEventListener("click", function() {
-    document.getElementById("sqlInput").value = "SELECT * FROM tbl_station_cache WHERE risk = 'UNSAFE'";
-    const filtered = roomDbCache.filter(r => r.risk === "UNSAFE");
-    renderRoomTable(filtered);
+  // places buttons
+  const placeButtons = PLACES.map(p => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'chip';
+    b.innerHTML = `${p.name}<span>${p.z} m</span>`;
+    b.addEventListener('click', () => travel(p.x * 1000, null));
+    el.places.appendChild(b);
+    return b;
   });
 
-  document.getElementById("btnRunSql").addEventListener("click", function() {
-    const q = document.getElementById("sqlInput").value.trim().toLowerCase();
-    if (q.includes("where temp > 25") || q.includes("temp>25")) {
-      renderRoomTable(roomDbCache.filter(r => r.temp > 25.0));
-    } else if (q.includes("where risk") || q.includes("unsafe")) {
-      renderRoomTable(roomDbCache.filter(r => r.risk === "UNSAFE"));
+  // ---- Render ---------------------------------------------------------------
+  let s = 680, hour = 10; // s: 0..1000 across the slope
+  let lastSummary = '';
+
+  function dryWindow(z) {
+    let best = null, start = null;
+    for (let i = 0; i <= 96; i++) {
+      const h = i * 0.25;
+      const ok = i < 96 && h >= SUNRISE && h <= SUNSET && (() => { const c = conditions(z, h); return c.rain < 0.25 && !c.inCloud; })();
+      if (ok && start === null) start = h;
+      if (!ok && start !== null) { const len = h - start; if (!best || len > best[1] - best[0]) best = [start, h]; start = null; }
+    }
+    return best;
+  }
+
+  function cloudPath(base, thick) {
+    const yb = yOf(base), bumps = [1, 0.62, 0.9, 0.5, 1, 0.74, 0.58, 0.95, 0.7];
+    const step = (W + 40) / (bumps.length - 1);
+    const pts = bumps.map((b, i) => [-20 + i * step, yb - thick * (0.72 + 0.28 * b)]);
+    let d = `M-20,${yb.toFixed(1)} L${W + 20},${yb.toFixed(1)} L${W + 20},${pts[pts.length - 1][1].toFixed(1)}`;
+    for (let i = pts.length - 1; i > 0; i--) {
+      const [x0, y0] = pts[i], [x1, y1] = pts[i - 1];
+      const mx = (x0 + x1) / 2, my = (y0 + y1) / 2;
+      d += ` Q${x0.toFixed(1)},${(y0 - 8).toFixed(1)} ${mx.toFixed(1)},${my.toFixed(1)}`;
+    }
+    return d + ` L-20,${yb.toFixed(1)} Z`;
+  }
+
+  function render() {
+    const z = elevationAt(s / 1000);
+    const c = conditions(z, hour);
+    const sky = skyAt(hour);
+    const night = 1 - smooth(SUNRISE - 0.8, SUNRISE + 0.6, hour) * (1 - smooth(SUNSET - 0.9, SUNSET + 1.1, hour));
+    const isNight = night > 0.55;
+
+    // page + scene colours
+    const root = document.documentElement.style;
+    root.setProperty('--sky', css(sky));
+    root.setProperty('--ground', css(mix(sky, [250, 252, 252], 0.86)));
+    el.sky.style.fill = css(sky);
+    el.far.style.fill = css(mix(sky, [22, 48, 31], 0.32));
+    el.mid.style.fill = css(mix(sky, [22, 48, 31], 0.58));
+    el.near.style.fill = css(mix(sky, [20, 44, 29], 0.86));
+    const cloudCol = mix([255, 255, 255], sky, 0.1 + 0.75 * night);
+    el.cloud.style.fill = css(cloudCol);
+    el.stars.style.opacity = clamp(night * 1.2 - 0.2, 0, 1).toFixed(2);
+
+    // sun and moon
+    const arc = u => [30 + u * 330, 175 - 140 * Math.sin(Math.PI * u)];
+    const su = (hour - SUNRISE) / (SUNSET - SUNRISE);
+    const mu = ((hour - SUNSET + 24) % 24) / (24 - (SUNSET - SUNRISE));
+    const [sx, sy] = arc(clamp(su, 0, 1)), [mx, my] = arc(clamp(mu, 0, 1));
+    el.sun.setAttribute('cx', sx); el.sun.setAttribute('cy', sy);
+    el.sun.style.opacity = su >= 0 && su <= 1 ? 1 : 0;
+    el.moon.setAttribute('cx', mx); el.moon.setAttribute('cy', my);
+    el.moon.style.opacity = su >= 0 && su <= 1 ? 0 : 1;
+
+    // cloud deck and rain
+    el.cloud.setAttribute('d', cloudPath(c.base, deckDepth(hour) * 0.14));
+    const yb = yOf(c.base);
+    let streaks = '';
+    for (let i = 0; i < 24; i++) {
+      const x = 10 + i * 16 + (i % 3) * 4;
+      const ground = yOf(elevationAt(x / W));
+      const top = Math.max(yb + 2, 0);
+      if (ground - top > 10) streaks += `M${x},${top.toFixed(1)} L${(x - 5).toFixed(1)},${(ground - 3).toFixed(1)} `;
+    }
+    el.rain.setAttribute('d', streaks);
+    el.rain.style.opacity = clamp((c.rain - 0.28) * 1.6, 0, 0.6).toFixed(2);
+
+    // pin
+    const px = s / 1000 * W, py = yOf(z);
+    el.pin.setAttribute('transform', `translate(${px.toFixed(1)} ${py.toFixed(1)})`);
+    const near = PLACES.reduce((a, p) => Math.abs(p.x * 1000 - s) < Math.abs(a.x * 1000 - s) ? p : a);
+    const atPlace = Math.abs(near.x * 1000 - s) < 24;
+    const rounded = Math.round(z / 5) * 5;
+    el.pinLabel.textContent = atPlace ? `${near.name} · ${near.z} m` : `${rounded} m`;
+    const sw = el.scene.clientWidth, lw = el.pinLabel.offsetWidth;
+    el.pinLabel.style.left = `${clamp(px / W * sw, lw / 2 + 8, sw - lw / 2 - 8).toFixed(1)}px`;
+    el.pinLabel.style.top = `${(py / H * 100).toFixed(2)}%`;
+
+    // readouts
+    if (atPlace) {
+      el.place.textContent = near.name;
+      el.sub.textContent = `${near.z} m above sea level, approx.`;
     } else {
-      renderRoomTable(roomDbCache);
+      const below = [...PLACES].reverse().find(p => p.x * 1000 < s), above = PLACES.find(p => p.x * 1000 > s);
+      el.place.textContent = `${rounded} m up the slope`;
+      el.sub.textContent = !below ? 'Between the coast and Carmen' : !above ? 'Above Claveria' : `Between ${below.name} and ${above.name}`;
     }
-  });
+    el.temp.textContent = Math.round(c.t);
+    const condText = describe(c, isNight);
+    el.cond.textContent = condText;
+    el.clock.textContent = clock(hour);
+    el.sRain.textContent = `${Math.round(c.rain * 100)}%`;
+    el.sHum.textContent = `${Math.round(c.rh)}%`;
+    el.sWind.textContent = `${Math.round(c.wind)} km/h`;
+    el.sBase.textContent = c.inCloud ? 'Here' : `${Math.round(c.base / 10) * 10} m`;
 
-  // Export Telemetry Record (JSON)
-  document.getElementById("btnExportAgro").addEventListener("click", function() {
-    const s = STATIONS[currentStnKey];
-    const temp = parseFloat(document.getElementById("sliderTemp").value);
-    const rh = parseFloat(document.getElementById("sliderRh").value);
-    const wind = parseFloat(document.getElementById("sliderWind").value);
-    const rad = parseFloat(document.getElementById("sliderRad").value);
-    const phys = computeFao56(temp, rh, wind, rad);
+    el.slope.setAttribute('aria-valuetext', `${el.place.textContent}, ${rounded} metres`);
+    el.hour.setAttribute('aria-valuetext', clock(hour));
+    el.slope.value = s; el.hour.value = hour;
 
-    const telemetryReport = {
-      protocol: "CLIMAPOCKET-M3-ANDROID-15",
-      version: "1.7.0",
-      station: {
-        id: s.id,
-        name: s.fullName,
-        elevation_meters: s.elev,
-        cooperative: s.coop,
-        primary_crop: s.crop
-      },
-      telemetry: {
-        ambient_temp_celsius: temp,
-        relative_humidity_pct: rh,
-        wind_velocity_mps: wind,
-        solar_radiation_mj_m2: rad
-      },
-      agrometeorology_fao56: {
-        et0_evapotranspiration_mm_day: parseFloat(phys.et0),
-        soil_moisture_deficit_mm: parseFloat(phys.deficit),
-        spray_drift_risk: phys.driftStatus,
-        drift_index_ratio: parseFloat(phys.driftIndex),
-        fungal_blight_risk: phys.fungal
-      },
-      material_you_palette: s.theme,
-      exported_at: new Date().toISOString()
+    // chart
+    let line = '', win = dryWindow(z);
+    for (let i = 0; i <= 96; i++) {
+      const h = i * 0.25;
+      line += (i ? 'L' : 'M') + cx(h).toFixed(1) + ',' + cy(coastTemp(h) - LAPSE * z / 1000).toFixed(1) + ' ';
+    }
+    el.line.setAttribute('d', line);
+    rainRects.forEach((r, i) => {
+      const p = conditions(z, i / 2 + 0.25).rain, bh = Math.max(2, p * 46);
+      r.setAttribute('y', CH - bh); r.setAttribute('height', bh);
+    });
+    if (win) { el.dry.setAttribute('x', cx(win[0])); el.dry.setAttribute('width', cx(win[1]) - cx(win[0])); el.dry.style.opacity = 1; }
+    else el.dry.style.opacity = 0;
+    el.scrub.setAttribute('x1', cx(hour)); el.scrub.setAttribute('x2', cx(hour));
+    el.dot.setAttribute('cx', cx(hour)); el.dot.setAttribute('cy', cy(c.t));
+    el.window.textContent = win
+      ? `Longest dry stretch in daylight at this height: ${clock(win[0])} to ${clock(win[1])}, rain chance under 25%.`
+      : 'No daylight stretch at this height stays under a 25% rain chance.';
+
+    placeButtons.forEach((b, i) => b.setAttribute('aria-pressed', String(Math.abs(PLACES[i].x * 1000 - s) < 24)));
+
+    const summary = `${el.place.textContent}, ${clock(hour)}: ${Math.round(c.t)} degrees, ${condText.toLowerCase()}, ${Math.round(c.rain * 100)} percent chance of rain.`;
+    if (summary !== lastSummary) { lastSummary = summary; clearTimeout(render.t); render.t = setTimeout(() => { el.live.textContent = summary; }, 600); }
+  }
+
+  // ---- Motion ----------------------------------------------------------------
+  let raf = 0, playing = false, last = 0;
+  const ease = t => 1 - Math.pow(1 - t, 3);
+
+  function travel(toS, toH) {
+    stopPlay();
+    if (reduced.matches) { if (toS !== null) s = toS; if (toH !== null) hour = toH; render(); return; }
+    const fromS = s, fromH = hour, t0 = performance.now(), dur = 520;
+    cancelAnimationFrame(raf);
+    const step = now => {
+      const t = clamp((now - t0) / dur, 0, 1), e = ease(t);
+      if (toS !== null) s = fromS + (toS - fromS) * e;
+      if (toH !== null) hour = fromH + (toH - fromH) * e;
+      render();
+      if (t < 1) raf = requestAnimationFrame(step);
     };
+    raf = requestAnimationFrame(step);
+  }
 
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(telemetryReport, null, 2));
-    const downloadAnchor = document.createElement("a");
-    downloadAnchor.setAttribute("href", dataStr);
-    downloadAnchor.setAttribute("download", "climapocket_" + currentStnKey + "_telemetry.json");
-    document.body.appendChild(downloadAnchor);
-    downloadAnchor.click();
-    downloadAnchor.remove();
-  });
+  function tick(now) {
+    if (!playing) return;
+    hour = (hour + (now - last) / 1000 * 1.5) % 24;
+    last = now;
+    render();
+    raf = requestAnimationFrame(tick);
+  }
+  function startPlay() {
+    if (reduced.matches) return;
+    cancelAnimationFrame(raf);
+    playing = true; last = performance.now();
+    el.play.textContent = 'Pause';
+    raf = requestAnimationFrame(tick);
+  }
+  function stopPlay() {
+    playing = false; cancelAnimationFrame(raf);
+    el.play.textContent = 'Play the day';
+  }
+  function syncMotion() { el.play.hidden = reduced.matches; if (reduced.matches) stopPlay(); }
 
-  // Initial Boot Render
-  renderStation("claveria");
-  renderRoomTable(roomDbCache);
-});
+  // ---- Entrances ---------------------------------------------------------------
+  // Each part rises into place once as it enters. Skipped for reduced motion.
+  if (!reduced.matches && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(entries => entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    }), { threshold: 0.12 });
+    document.querySelectorAll('.intro > *, .try, .phone, .how h2, .how-lede, .rules li, .about h2, .about-grid > div, .foot-name').forEach(node => {
+      const siblings = [...node.parentElement.children];
+      node.style.transitionDelay = `${siblings.indexOf(node) * 80}ms`;
+      node.classList.add('rise');
+      io.observe(node);
+    });
+  }
+
+  // ---- Wiring ---------------------------------------------------------------
+  el.slope.addEventListener('input', () => { stopPlay(); cancelAnimationFrame(raf); s = +el.slope.value; render(); });
+  el.hour.addEventListener('input', () => { stopPlay(); cancelAnimationFrame(raf); hour = +el.hour.value; render(); });
+  el.play.addEventListener('click', () => (playing ? stopPlay() : startPlay()));
+  document.querySelectorAll('[data-s]').forEach(b => b.addEventListener('click', () => travel(+b.dataset.s, +b.dataset.h)));
+  reduced.addEventListener('change', syncMotion);
+  syncMotion();
+  render();
+})();

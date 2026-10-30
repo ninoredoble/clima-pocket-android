@@ -2,398 +2,170 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ClimaPocket Android - Material You Agrometeorological Studio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ClimaPocket: a forecast that follows the slope</title>
+  <meta name="description" content="A design study for a phone weather screen, built as a web prototype. Drag a pin up a mountain slope and scrub through the day. Sample data, not a forecast.">
+  <link rel="preload" href="fonts/bricolage-grotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 fill=%27%2310212b%27/%3E%3Ccircle cx=%2716%27 cy=%2713%27 r=%278%27 fill=%27%23fff3c9%27/%3E%3Cpath d=%27M0 32V24L12 17l10 8 10-6v13z%27 fill=%27%234fa3d1%27/%3E%3C/svg%3E">
   <link rel="stylesheet" href="styles.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <!-- Top Studio Header -->
-  <header class="studio-navbar">
-    <div class="studio-brand">
-      <div class="android-emblem">M3</div>
-      <div class="studio-title-block">
-        <h1>CLIMA-POCKET // AGRO-WEATHER</h1>
-        <span>ANDROID 15 // JETPACK COMPOSE 1.7 // ROOM SQLITE // FAO-56 ENGINE</span>
-      </div>
-    </div>
-
-    <nav class="studio-nav-tabs">
-      <button class="s-tab-btn active" data-tab="tab-stations">FIELD STATIONS</button>
-      <button class="s-tab-btn" data-tab="tab-agro">AGROMETEOROLOGY</button>
-      <button class="s-tab-btn" data-tab="tab-room">ROOM DB CACHE</button>
-      <button class="s-tab-btn" data-tab="tab-code">KOTLIN COMPOSE ARCH</button>
+  <header class="bar">
+    <a class="wordmark" href="#top">ClimaPocket</a>
+    <nav aria-label="Page">
+      <a href="#how">How the numbers work</a>
+      <a href="#about">What this is</a>
+      <a class="bar-action" href="https://github.com/ninoredoble/clima-pocket-android">Source</a>
     </nav>
-
-    <div class="studio-badge">
-      TARGET SDK 35 // PIXEL 9 PRO
-    </div>
   </header>
 
-  <!-- Studio Stage -->
-  <main class="studio-stage">
+  <main id="top">
 
-    <!-- Left Dossier & Controls -->
-    <aside class="catalog-sidebar">
-
-      <!-- Pane 1: Stations List -->
-      <div class="tab-pane active" id="tab-stations">
-        <span class="section-kicker">Northern Mindanao Field Network (5 Stations)</span>
-        <p style="font-size: 11.5px; color: #94a3b8; line-height: 1.5;">
-          Select a cooperative telemetry node. Each location dynamically calculates the Material You 3.5 tonal color palette from ambient microclimate sensor feeds.
-        </p>
-
-        <div class="station-grid">
-          <!-- Claveria -->
-          <div class="station-card active" data-stn="claveria">
-            <div class="stn-info">
-              <h4>Claveria Highland Station</h4>
-              <p>Elev. 980m // Bukidnon Plateau // Corn &amp; Arabica</p>
-            </div>
-            <div class="stn-stat">
-              <div class="stn-temp">22.4&deg;C</div>
-              <div class="stn-moist">SMD: 14mm</div>
-            </div>
-          </div>
-
-          <!-- Manolo Fortich -->
-          <div class="station-card" data-stn="manolo">
-            <div class="stn-info">
-              <h4>Manolo Fortich Foothills</h4>
-              <p>Elev. 650m // Del Monte Basin // Pineapple &amp; Cacao</p>
-            </div>
-            <div class="stn-stat">
-              <div class="stn-temp">25.1&deg;C</div>
-              <div class="stn-moist">SMD: 28mm</div>
-            </div>
-          </div>
-
-          <!-- Carmen River Valley -->
-          <div class="station-card" data-stn="carmen">
-            <div class="stn-info">
-              <h4>Carmen Valley Floodplain</h4>
-              <p>Elev. 25m // Cagayan Corridor // Alluvial Citrus</p>
-            </div>
-            <div class="stn-stat">
-              <div class="stn-temp">30.8&deg;C</div>
-              <div class="stn-moist">SMD: 42mm</div>
-            </div>
-          </div>
-
-          <!-- Malaybalay High Valley -->
-          <div class="station-card" data-stn="malaybalay">
-            <div class="stn-info">
-              <h4>Malaybalay High Plain</h4>
-              <p>Elev. 622m // Central Valley // Sugarcane &amp; Coffee</p>
-            </div>
-            <div class="stn-stat">
-              <div class="stn-temp">24.6&deg;C</div>
-              <div class="stn-moist">SMD: 19mm</div>
-            </div>
-          </div>
-
-          <!-- Maramag Basin -->
-          <div class="station-card" data-stn="maramag">
-            <div class="stn-info">
-              <h4>Maramag Irrigation Basin</h4>
-              <p>Elev. 340m // Pulangi Watershed // Lowland Paddy Rice</p>
-            </div>
-            <div class="stn-stat">
-              <div class="stn-temp">28.3&deg;C</div>
-              <div class="stn-moist">SMD: 35mm</div>
-            </div>
-          </div>
-        </div>
-
-        <div style="margin-top: 12px; padding: 12px; background: #141a24; border-radius: 8px; border: 1px solid var(--studio-border); font-size: 11px; color: #94a3b8; line-height: 1.5;">
-          <strong style="color: #ffffff;">Dynamic Theming Engine:</strong> When shifting between microclimates, the Android 15 Monet algorithm derives 6 tonal surface palettes (Primary, Surface, Tonal Variant, Container) reflecting crop canopy moisture and temperature.
-        </div>
+    <section class="opening" aria-labelledby="title">
+      <div class="intro">
+        <h1 id="title">Weather that follows the slope</h1>
+        <p class="lede">A design study for a phone weather screen. Drag the pin up the mountain and scrub through the day: temperature, cloud, rain and wind all follow the elevation you pick.</p>
+        <p class="plain">This is a web prototype in a phone-shaped frame. It is not an Android app, and every number is sample data from a few written rules, not a forecast.</p>
       </div>
 
-      <!-- Pane 2: Agrometeorology Calculator -->
-      <div class="tab-pane" id="tab-agro">
-        <span class="section-kicker">FAO-56 Agrometeorological Physics Model</span>
-        <p style="font-size: 11.5px; color: #94a3b8; line-height: 1.5;">
-          Calculates reference crop evapotranspiration (ET0) via the Penman-Monteith equation, pesticide chemical drift boundaries, and fungal pathogen risks.
-        </p>
-
-        <div class="agro-calc-box">
-          <div class="calc-header">
-            <h5>REAL-TIME SOIL &amp; CANOPY PARAMETERS</h5>
-            <span class="calc-badge" id="sprayStatusBadge">SAFE TO SPRAY</span>
-          </div>
-
-          <div style="display: flex; flex-direction: column; gap: 8px; font-size: 11px;">
-            <div>
-              <div style="display:flex; justify-content:space-between; margin-bottom: 2px;">
-                <span>Ambient Temperature</span>
-                <span id="calcTempDisp" style="font-family: var(--font-mono); color: #3ddc84;">22.4&deg;C</span>
-              </div>
-              <input type="range" id="sliderTemp" min="15" max="38" step="0.5" value="22.4" style="width: 100%;">
-            </div>
-
-            <div>
-              <div style="display:flex; justify-content:space-between; margin-bottom: 2px;">
-                <span>Relative Humidity (RH)</span>
-                <span id="calcRhDisp" style="font-family: var(--font-mono); color: #3ddc84;">88%</span>
-              </div>
-              <input type="range" id="sliderRh" min="30" max="100" step="1" value="88" style="width: 100%;">
-            </div>
-
-            <div>
-              <div style="display:flex; justify-content:space-between; margin-bottom: 2px;">
-                <span>Canopy Wind Velocity (u2)</span>
-                <span id="calcWindDisp" style="font-family: var(--font-mono); color: #3ddc84;">2.1 m/s</span>
-              </div>
-              <input type="range" id="sliderWind" min="0.5" max="12.0" step="0.1" value="2.1" style="width: 100%;">
-            </div>
-
-            <div>
-              <div style="display:flex; justify-content:space-between; margin-bottom: 2px;">
-                <span>Solar Irradiance (Rs)</span>
-                <span id="calcRadDisp" style="font-family: var(--font-mono); color: #3ddc84;">18.5 MJ/m2</span>
-              </div>
-              <input type="range" id="sliderRad" min="5" max="30" step="0.5" value="18.5" style="width: 100%;">
-            </div>
-          </div>
-
-          <div class="calc-metric-grid" style="margin-top: 8px;">
-            <div class="calc-cell">
-              <div class="calc-cell-val" id="calcEt0">3.42 mm/d</div>
-              <div class="calc-cell-lbl">FAO-56 ET0 RATE</div>
-            </div>
-            <div class="calc-cell">
-              <div class="calc-cell-val" id="calcDriftRisk">LOW (0.18)</div>
-              <div class="calc-cell-lbl">AERIAL DRIFT INDEX</div>
-            </div>
-            <div class="calc-cell">
-              <div class="calc-cell-val" id="calcFungalRisk">ELEVATED</div>
-              <div class="calc-cell-lbl">BLIGHT PATHOGEN</div>
-            </div>
-            <div class="calc-cell">
-              <div class="calc-cell-val" id="calcDeficit">14.2 mm</div>
-              <div class="calc-cell-lbl">MOISTURE DEFICIT</div>
-            </div>
-          </div>
-
-          <button id="btnExportAgro" class="btn-export-agro">DOWNLOAD TELEMETRY RECORD (JSON)</button>
+      <div class="try">
+          <h2 class="try-title">Three places to start</h2>
+          <ul>
+            <li><button type="button" data-s="900" data-h="6.5"><b>Dawn above the cloud</b><span>Claveria at 06:30, in the open above a low cloud deck.</span></button></li>
+            <li><button type="button" data-s="900" data-h="15.5"><b>Afternoon showers</b><span>Claveria at 15:30, when the rain chance peaks.</span></button></li>
+            <li><button type="button" data-s="100" data-h="2.5"><b>Warm, still night</b><span>Carmen at 02:30, low on the slope.</span></button></li>
+          </ul>
         </div>
-      </div>
 
-      <!-- Pane 3: Room Database Explorer -->
-      <div class="tab-pane" id="tab-room">
-        <span class="section-kicker">Android Room DB 2.6.1 Local Cache Engine</span>
-        <p style="font-size: 11.5px; color: #94a3b8; line-height: 1.5;">
-          Simulates an offline-first SQLite database layer on device. Farmers in remote valleys retain full telemetry history even without cellular coverage.
-        </p>
+      <div class="stage">
+        <div class="phone" data-ui>
+          <div class="screen" id="app">
+            <noscript><p class="no-js">This study needs JavaScript to run. The rules behind the numbers are described below the phone.</p></noscript>
 
-        <div class="room-query-box">
-          <div style="font-size: 10px; color: #94a3b8; font-family: var(--font-mono);">
-            TABLE: <strong>tbl_station_cache</strong> (id, station, temp, humidity, et0, sync_ts)
-          </div>
+            <div class="topline">
+              <div class="where">
+                <h2 id="place">Malaybalay</h2>
+                <p id="sub">620 m above sea level, approx.</p>
+              </div>
+              <span class="tag">Sample data</span>
+            </div>
 
-          <div class="query-input-row">
-            <input type="text" id="sqlInput" value="SELECT * FROM tbl_station_cache ORDER BY id ASC">
-            <button id="btnRunSql" class="btn-run-sql">QUERY</button>
-          </div>
+            <div class="scene" id="scene">
+              <svg id="sceneSvg" viewBox="0 0 390 250" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+                <rect id="sky" width="390" height="250"></rect>
+                <g id="stars"></g>
+                <circle id="sun" r="15"></circle>
+                <circle id="moon" r="12"></circle>
+                <path id="farRidge"></path>
+                <path id="midRidge"></path>
+                <path id="nearRidge"></path>
+                <g id="stationDots"></g>
+                <path id="cloud"></path>
+                <path id="rain"></path>
+                <g id="pin">
+                  <circle r="11" class="pin-ring"></circle>
+                  <circle r="6" class="pin-core"></circle>
+                </g>
+                <text x="12" y="245" class="edge-label">Coast</text>
+                <text x="378" y="245" class="edge-label" text-anchor="end">Plateau</text>
+              </svg>
+              <div class="pin-label" id="pinLabel" aria-hidden="true">620 m</div>
+              <input type="range" id="slope" min="0" max="1000" step="1" value="680" aria-label="Position on the slope, from the coast to the plateau" aria-describedby="slopeHelp">
+              <span class="ring" aria-hidden="true"></span>
+            </div>
+            <p class="sr-only" id="slopeHelp">Use left and right arrow keys to move up or down the slope.</p>
 
-          <div style="display: flex; gap: 6px;">
-            <button id="btnSqlAll" style="background:#1e293b; border:1px solid #334155; color:#cbd5e1; padding:3px 8px; border-radius:4px; font-size:9.5px; font-family:var(--font-mono); cursor:pointer;">SELECT ALL</button>
-            <button id="btnSqlHighTemp" style="background:#1e293b; border:1px solid #334155; color:#cbd5e1; padding:3px 8px; border-radius:4px; font-size:9.5px; font-family:var(--font-mono); cursor:pointer;">TEMP &gt; 25&deg;C</button>
-            <button id="btnSqlAdvisory" style="background:#1e293b; border:1px solid #334155; color:#cbd5e1; padding:3px 8px; border-radius:4px; font-size:9.5px; font-family:var(--font-mono); cursor:pointer;">SPRAY UNSAFE</button>
-          </div>
+            <div class="now">
+              <p class="temp"><span id="temp">26</span><span class="unit">°C</span></p>
+              <div class="cond">
+                <p id="cond">Partly cloudy</p>
+                <p class="clock" id="clock">10:00</p>
+              </div>
+            </div>
 
-          <div style="max-height: 240px; overflow-y: auto; margin-top: 6px;">
-            <table class="room-results-table">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>STATION</th>
-                  <th>TEMP</th>
-                  <th>RH</th>
-                  <th>ET0</th>
-                  <th>SYNCED</th>
-                </tr>
-              </thead>
-              <tbody id="roomTbody">
-                <!-- Injected via JS -->
-              </tbody>
-            </table>
+            <dl class="stats">
+              <div><dt>Rain</dt><dd id="sRain">18%</dd></div>
+              <div><dt>Humidity</dt><dd id="sHum">70%</dd></div>
+              <div><dt>Wind</dt><dd id="sWind">12 km/h</dd></div>
+              <div><dt>Cloud base</dt><dd id="sBase">810 m</dd></div>
+            </dl>
+
+            <div class="hours">
+              <div class="chart">
+                <svg id="chart" viewBox="0 0 358 92" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+                  <g id="nightBands"></g>
+                  <rect id="dryBand" y="0" height="92"></rect>
+                  <g id="rainBars"></g>
+                  <path id="tempLine"></path>
+                  <line id="scrub" y1="0" y2="92"></line>
+                  <circle id="tempDot" r="5"></circle>
+                </svg>
+                <input type="range" id="hour" min="0" max="23.75" step="0.25" value="10" aria-label="Time of day" aria-describedby="hourHelp">
+                <span class="ring" aria-hidden="true"></span>
+              </div>
+              <div class="ticks" aria-hidden="true"><span>0:00</span><span>6:00</span><span>12:00</span><span>18:00</span><span>24:00</span></div>
+              <p class="sr-only" id="hourHelp">Use left and right arrow keys to move through the day.</p>
+            </div>
+
+            <div class="controls">
+              <button type="button" class="play" id="play">Play the day</button>
+              <div class="places" id="places" role="group" aria-label="Jump to a place"></div>
+            </div>
+
+            <p class="window" id="window"></p>
+            <p class="sr-only" id="live" aria-live="polite"></p>
           </div>
         </div>
       </div>
+    </section>
 
-      <!-- Pane 4: Kotlin Compose Source -->
-      <div class="tab-pane" id="tab-code">
-        <span class="section-kicker">Android Jetpack Compose 1.7 Architecture</span>
-        <p style="font-size: 11.5px; color: #94a3b8; line-height: 1.5;">
-          Production-grade Kotlin implementation featuring reactive M3 MaterialTheme tokens, Kotlin coroutines StateFlow collector, and offline Room DAO interface.
-        </p>
+    <section class="how" id="how" aria-labelledby="how-title">
+      <h2 id="how-title">How the numbers are made</h2>
+      <p class="how-lede">Nothing on the phone is measured. Every figure comes from three plain rules written at the top of <a href="app.js">app.js</a>, so anyone can read them and argue with them.</p>
 
-        <div class="code-preview-frame">
-<pre><code>// ClimaPocketApp.kt - Jetpack Compose 1.7 / Material 3.5
-@Composable
-fun ClimaPocketScreen(
-    viewModel: WeatherViewModel = hiltViewModel()
-) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val dynamicColors = rememberDynamicAgroScheme(
-        temp = uiState.currentStation.temperature,
-        humidity = uiState.currentStation.humidity
-    )
+      <ol class="rules">
+        <li>
+          <p class="big">−6.5 °C<span> per km up</span></p>
+          <p>Air cools about 6.5 °C for each kilometre of climb, the usual average. The coast follows an invented day curve, 22.5 °C at 02:30 rising to 30.5 °C at 14:30.</p>
+        </li>
+        <li>
+          <p class="big">125 m<span> of cloud per °C</span></p>
+          <p>Cloud base sits about 125 m up for every degree between the air temperature and the dew point. The coastal dew point is fixed at 21.5 °C, so the cloud deck rises through the morning and sinks again at night.</p>
+        </li>
+        <li>
+          <p class="big">15:30<span> showers peak</span></p>
+          <p>Rain chance peaks in mid-afternoon and grows with height, a pattern common in tropical highlands. The curve is made up for this study. The green band on the chart is the longest daytime stretch under 25%.</p>
+        </li>
+      </ol>
+    </section>
 
-    MaterialTheme(colorScheme = dynamicColors) {
-        Scaffold(
-            topBar = { AgroTopAppBar(uiState.currentStation) },
-            bottomBar = { M3AgroNavigationBar() }
-        ) { paddingValues -&gt;
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues),
-                contentPadding = PaddingValues(16.dp),
-                verticalArrangement = Arrangement.spacedBy(14.dp)
-            ) {
-                item {
-                    HeroWeatherCard(
-                        station = uiState.currentStation,
-                        et0 = calculateFao56Et0(uiState.currentStation)
-                    )
-                }
-                item {
-                    DiurnalForecastRow(uiState.diurnalForecast)
-                }
-                item {
-                    AgronomicAdvisoryCard(
-                        advisory = uiState.currentAdvisory,
-                        driftRisk = uiState.sprayWindowRisk
-                    )
-                }
-            }
-        }
-    }
-}</code></pre>
+    <section class="about" id="about" aria-labelledby="about-title">
+      <h2 id="about-title">What this is, and what it is not</h2>
+      <div class="about-grid">
+        <div>
+          <h3>It is</h3>
+          <p>A design study for one idea: forecast by elevation instead of by town. It is plain HTML, CSS and JavaScript with no build step, one font file, and no network requests for weather.</p>
+          <p>The sky, the page tint and the chart all react to the same two controls, so the phone behaves like a small instrument rather than a set of screens.</p>
+        </div>
+        <div>
+          <h3>It is not</h3>
+          <p>Not an Android app. There is no Kotlin, Room database, sensor feed or backend here. Not a forecast either, so please do not plan spraying, harvest or travel with it.</p>
+          <p>Place names are real towns in Northern Mindanao, but their elevations are approximate and the slope between them is a schematic, not a survey line.</p>
+        </div>
+        <div>
+          <h3>History</h3>
+          <p>An earlier version of this repository described itself as an agrometeorology system for Android. It was never that. This rewrite replaces it with what it actually is, and the repository name still carries the old claim.</p>
         </div>
       </div>
-
-    </aside>
-
-    <!-- Right: Emulated Pixel 9 Pro Hardware -->
-    <section class="phone-viewport-stage">
-
-      <div class="pixel-device-chassis">
-        <!-- Physical Hardware Accents -->
-        <div class="pixel-camera-island">
-          <div class="cam-lens"></div>
-          <div class="cam-sensor"></div>
-        </div>
-        <div class="pixel-power-btn"></div>
-        <div class="pixel-volume-btn"></div>
-
-        <!-- AMOLED Display Screen -->
-        <div class="pixel-screen" id="pixelScreen">
-
-          <!-- Android 15 Status Bar -->
-          <div class="m3-status-bar">
-            <span>09:41</span>
-            <div class="status-icons">
-              <span>LTE+</span>
-              <span>&bull;</span>
-              <span>5G</span>
-              <span>&bull;</span>
-              <span>98%</span>
-            </div>
-          </div>
-
-          <!-- App Top Bar -->
-          <div class="phone-top-bar">
-            <div class="app-title-group">
-              <h3 id="phoneStationName">Claveria Station</h3>
-              <p id="phoneStationSub">Bukidnon High Elevation Grid // 980m</p>
-            </div>
-            <span class="coop-badge" id="phoneCoopBadge">NORTHERN MIN-COOP</span>
-          </div>
-
-          <!-- Scrollable Phone Body -->
-          <div class="phone-scroll-body">
-
-            <!-- Hero Weather & Agro Card -->
-            <div class="hw-hero-card">
-              <div class="hw-temp-row">
-                <div>
-                  <div class="hw-big-temp" id="phoneTemp">22.4&deg;</div>
-                  <div class="hw-condition-text" id="phoneCondition">Highland Canopy Mist</div>
-                  <div class="hw-high-low" id="phoneHighLow">H: 26.8&deg; &bull; L: 19.2&deg;</div>
-                </div>
-                <div class="hw-condition-badge" id="phoneThemeBadge">MOSS PALETTE</div>
-              </div>
-
-              <div class="hw-meta-grid">
-                <div class="hw-meta-item">
-                  <span class="hw-m-val" id="phoneHumidity">88%</span>
-                  <span class="hw-m-lbl">HUMIDITY</span>
-                </div>
-                <div class="hw-meta-item">
-                  <span class="hw-m-val" id="phoneEt0">3.4 mm/d</span>
-                  <span class="hw-m-lbl">FAO-56 ET0</span>
-                </div>
-                <div class="hw-meta-item">
-                  <span class="hw-m-val" id="phoneWind">2.1 m/s</span>
-                  <span class="hw-m-lbl">WIND SPEED</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Diurnal Trend Row -->
-            <div>
-              <div style="display:flex; justify-content:space-between; margin-bottom: 6px;">
-                <span style="font-size: 10px; font-weight: 700; color: var(--m3-text-dim); text-transform: uppercase; letter-spacing: 0.05em;">DIURNAL TIMELINE (24H)</span>
-                <span style="font-size: 9.5px; color: var(--m3-text-dim); font-family: var(--font-mono);">LOCAL COOP SYNC</span>
-              </div>
-              <div class="hourly-forecast-row" id="phoneHourly">
-                <!-- Populated dynamically via app.js -->
-              </div>
-            </div>
-
-            <!-- Agronomic Advisory Card -->
-            <div class="crop-advisory-card">
-              <span class="advisory-title" id="phoneAdvisoryTitle">FIELD ADVISORY // SAFE SPRAY WINDOW</span>
-              <p class="advisory-body" id="phoneAdvisoryBody">
-                Canopy wind speed at 2.1 m/s provides low risk of pesticide droplet drift. High relative humidity (88%) delays evaporation, optimizing foliar absorption for Arabica coffee trees.
-              </p>
-            </div>
-
-          </div>
-
-          <!-- Bottom Navigation Bar -->
-          <nav class="phone-bottom-nav">
-            <div class="nav-item-m3 active">
-              <span style="font-size: 14px; font-family: var(--font-mono); font-weight: 800;">W</span>
-              <span>WEATHER</span>
-            </div>
-            <div class="nav-item-m3">
-              <span style="font-size: 14px; font-family: var(--font-mono); font-weight: 800;">E</span>
-              <span>EVAPO</span>
-            </div>
-            <div class="nav-item-m3">
-              <span style="font-size: 14px; font-family: var(--font-mono); font-weight: 800;">S</span>
-              <span>SOIL</span>
-            </div>
-            <div class="nav-item-m3">
-              <span style="font-size: 14px; font-family: var(--font-mono); font-weight: 800;">C</span>
-              <span>CO-OP</span>
-            </div>
-          </nav>
-
-        </div>
-      </div>
-
     </section>
 
   </main>
+
+  <footer>
+    <p class="foot-name">ClimaPocket</p>
+    <p class="foot-line">A design study by Niño Redoble. <a href="https://github.com/ninoredoble/clima-pocket-android">Source on GitHub</a> · <a href="https://ninoredoble.is-a.dev/">Portfolio</a> · Typeface: Bricolage Grotesque, SIL Open Font License.</p>
+  </footer>
 
   <script src="app.js"></script>
 </body>
