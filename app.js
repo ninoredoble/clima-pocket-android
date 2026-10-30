@@ -268,7 +268,7 @@
     el.sWind.textContent = `${Math.round(c.wind)} km/h`;
     el.sBase.textContent = c.inCloud ? 'Here' : `${Math.round(c.base / 10) * 10} m`;
 
-    el.slope.setAttribute('aria-valuetext', atPlace ? `${near.name}, ${rounded} metres` : `${rounded} metres, ${el.sub.textContent.toLowerCase()}`);
+    el.slope.setAttribute('aria-valuetext', atPlace ? `${near.name}, ${near.z} metres` : `${rounded} metres, ${el.sub.textContent.toLowerCase()}`);
     el.hour.setAttribute('aria-valuetext', clock(hour));
     el.slope.value = s; el.hour.value = hour;
 
