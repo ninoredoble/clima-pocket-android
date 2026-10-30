@@ -356,6 +356,8 @@
   el.play.addEventListener('click', () => (playing ? stopPlay() : startPlay()));
   document.querySelectorAll('[data-s]').forEach(b => b.addEventListener('click', () => travel(+b.dataset.s, +b.dataset.h)));
   reduced.addEventListener('change', syncMotion);
+  new ResizeObserver(() => render()).observe(el.scene);
+  document.fonts.ready.then(render);
   syncMotion();
   render();
 })();
