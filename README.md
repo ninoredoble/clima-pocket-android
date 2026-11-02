@@ -1,84 +1,53 @@
-# ClimaPocket Android
+# ClimaPocket
 
-> Offline-First Agrometeorological Telemetry & Material You 3.5 Dynamic Studio for Northern Mindanao Agricultural Cooperatives.
+A design study for a phone weather screen, built as a web prototype. It explores one idea: forecast by **elevation** instead of by town.
 
-ClimaPocket Android is an agrometeorological decision-support system built for smallholder farmers, agronomists, and agricultural cooperatives across Bukidnon, Misamis Oriental, and the Cagayan Corridor. It pairs offline-first edge caching with FAO-56 Penman-Monteith physics to calculate reference evapotranspiration ($ET_0$), aerial chemical spray drift thresholds, and fungal pathogen risks directly on device.
+Drag a pin up a mountain slope, scrub through the day, and the temperature, cloud, humidity, rain chance and wind change with where you are and what time it is. The sky, the page tint and the chart follow the same two controls.
 
----
+**This is an interactive browser study.** It is not an Android app, not a forecast, and not a production system. Every number is sample data produced by a few written rules.
 
-## Technical Stack & Architecture
+## What it is not
 
-- **Operating System Target:** Android 15 (Vanilla Ice Cream / API Level 35)
-- **UI Framework:** Jetpack Compose 1.7 with Material Design 3.5 Dynamic Color Theming
-- **State Management:** Kotlin Coroutines `StateFlow` and MVI Architecture
-- **Local Persistence:** Room Database 2.6.1 (Offline-First SQLite Cache with WAL mode)
-- **Physics Engine:** FAO Irrigation and Drainage Paper No. 56 Penman-Monteith Model
-- **Target Device Emulation:** Google Pixel 9 Pro Ergonomic Unibody Chassis
+- Not an Android app. There is no Kotlin, Jetpack Compose, Room database or backend.
+- Not connected to any sensor, station or weather service, and it makes no network requests for weather.
+- Not safe to plan spraying, harvest or travel with.
+- Place names (Carmen, Maramag, Malaybalay, Claveria) are real towns in Northern Mindanao, but their elevations are approximate and the slope between them is a schematic, not a survey line.
 
----
+## How the numbers are made
 
-## Core Capabilities
+The rules sit at the top of `app.js`:
 
-### 1. Northern Mindanao Agrometeorological Field Network
-Telemetry node monitoring across 5 topographically distinct microclimates:
-- **Claveria Highland Station (Elev. 980m):** High-elevation Bukidnon volcanic plateau supporting Arabica coffee and sweet corn.
-- **Manolo Fortich Foothills (Elev. 650m):** Del Monte pineapple basin and cacao agroforestry terraces.
-- **Carmen Valley Floodplain (Elev. 25m):** Lowland Cagayan alluvial citrus and vegetable riverbanks.
-- **Malaybalay High Plain (Elev. 622m):** Central high valley sugarcane and coffee tracts.
-- **Maramag Irrigation Basin (Elev. 340m):** Lowland Pulangi River watershed paddy rice irrigation network.
+| Rule | Value |
+|---|---|
+| Air temperature at the coast | an invented day curve, 22.5 °C at 02:30 to 30.5 °C at 14:30 |
+| Cooling with height | 6.5 °C per km, the usual average |
+| Coastal dew point | fixed at 21.5 °C (invented) |
+| Cloud base | about 125 m for each °C between temperature and dew point, so the deck rises through the morning and sinks at night |
+| Cloud depth | 300 m plus up to 500 m in the afternoon (invented) |
+| Rain chance | peaks around 15:30 and grows with height (invented curve) |
+| Wind | a made-up afternoon breeze that strengthens with height |
 
-### 2. FAO-56 Penman-Monteith Evapotranspiration Calculator
-Computes daily reference crop evapotranspiration ($ET_0$, mm/day) incorporating:
-- Slope of saturation vapor pressure curve ($\Delta$)
-- Psychrometric constant ($\gamma = 0.066\text{ kPa/}^\circ\text{C}$)
-- Net solar irradiance ($R_s \to R_n$)
-- Wind velocity at 2-meter canopy height ($u_2$)
-- Vapor pressure deficit ($e_s - e_a$)
+The "dry stretch" shown under the chart is the longest daylight run with a rain chance under 25% and no cloud at that height.
 
-### 3. Pesticide Chemical Spray & Drift Advisory
-Evaluates canopy wind velocity and relative humidity against safety thresholds:
-- **Optimal Safe Window ($1.5 \le u_2 \le 3.5\text{ m/s}$):** Low droplet drift risk with optimal foliar deposition.
-- **Stagnant Warning ($u_2 < 1.5\text{ m/s}$):** Thermal inversion trapping droplets.
-- **Elevated / Unsafe Drift ($u_2 > 3.5\text{ m/s}$):** High aerodynamic displacement exceeding buffer margins.
+## Running it
 
-### 4. Room SQLite Offline Telemetry Cache
-Allows agronomists in deep mountain valleys without cellular signals to query historical weather observations, calculate localized moisture deficits, and sync records when connectivity is restored.
+Plain HTML, CSS and JavaScript, no build step. Open `index.html`, or serve the folder:
 
----
-
-## Telemetry Data Format
-
-ClimaPocket generates standard JSON telemetry records compatible with cooperative management information systems:
-
-```json
-{
-  "protocol": "CLIMAPOCKET-M3-ANDROID-15",
-  "version": "1.7.0",
-  "station": {
-    "id": "STN-MIN-01",
-    "name": "Claveria Highland Station",
-    "elevation_meters": 980,
-    "cooperative": "NORTHERN MIN-COOP",
-    "primary_crop": "Arabica Coffee & Sweet Corn"
-  },
-  "telemetry": {
-    "ambient_temp_celsius": 22.4,
-    "relative_humidity_pct": 88,
-    "wind_velocity_mps": 2.1,
-    "solar_radiation_mj_m2": 18.5
-  },
-  "agrometeorology_fao56": {
-    "et0_evapotranspiration_mm_day": 3.42,
-    "soil_moisture_deficit_mm": 14.2,
-    "spray_drift_risk": "OPTIMAL SAFE",
-    "drift_index_ratio": 0.42,
-    "fungal_blight_risk": "ELEVATED (BLIGHT RISK)"
-  }
-}
+```sh
+python3 -m http.server
 ```
 
----
+It is deployed as a static site on GitHub Pages.
 
-## License & Attribution
+## Accessibility
 
-Designed and engineered for agricultural cooperative deployment in Northern Mindanao. Distributed under the MIT License.
+Both controls are native range inputs, so they work with touch, mouse and arrow keys, and announce their value. With `prefers-reduced-motion` the entrance animations, falling rain, "Play the day" button and eased transitions are switched off.
+
+## Credits
+
+- Typeface: Bricolage Grotesque, SIL Open Font License 1.1, self-hosted in `fonts/`.
+- No licence file is included in this repository yet.
+
+## History
+
+An earlier version of this repository described itself as an Android agrometeorology system. It was never that; this rewrite replaces it with what the project actually is. The repository name still carries the old claim. A more accurate name would be `climapocket-study` or `slope-forecast-study`.
